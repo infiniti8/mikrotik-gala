@@ -1,0 +1,21 @@
+- name: firewall
+  hosts: DynamicHost
+  gather_facts: false
+  connection: network_cli
+  vars:
+    shopname:
+    shopcode:
+    shopnet:
+    vpnpass:
+  tasks:
+    - name: Add Bridge
+      routeros_command:
+        commands:
+          - /interface bridge add name=bridge1 protocol-mode=rstp
+          - /interface bridge port add bridge=bridge1 interface=ether3 pvid=10
+          - /interface bridge port add bridge=bridge1 interface=ether4 pvid=10
+          - /interface bridge port add bridge=bridge1 interface=ether5 pvid=10
+    - name: set SNMP community
+      routeros_command:
+        commands:
+          - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
