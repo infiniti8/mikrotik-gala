@@ -7,7 +7,7 @@
       telnet:
         user: admin
         password: Crkthjp2
-        login_prompt: "Username: "
+        login_prompt: "UserName: "
         prompts:
           - "[>|#]"
         command:
