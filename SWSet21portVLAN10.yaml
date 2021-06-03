@@ -1,6 +1,11 @@
 name: SWITCH VLAN
-  hosts: 
-  gather_facts: false
-    - name: SWITCH VLAN 21 port
-      raw: config vlan default delete 21
-      raw: config vlan Data add untagged 21
+hosts: onedlink
+gather_facts: false
+connectionon: network_cli
+tasks:
+  - name: VLAN default port DELETED
+    raw: config vlan default delete 21
+  - name: VLAN 21 port ADD
+    raw: config vlan Data add untagged 21
+  - name: SAVE
+    raw: save
