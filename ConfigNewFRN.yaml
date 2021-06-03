@@ -5,6 +5,7 @@
   vars:
     shopcode:
     shopnet:
+    shopfullname:
   tasks:
     - name: Set interface name
       routeros_command:
@@ -36,7 +37,7 @@
           - /ip service set api disabled=yes
           - /ip service set api-ssl disabled=yes
           - /ip service set ssh address="192.168.48.0/22,195.151.193.165/32,192.168.12.0/24,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24"
-          - /ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24,192.166.64.0/24"
+          - /ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24"
     - name: Disable SIP filtering
       routeros_command:
         commands:
@@ -60,7 +61,6 @@
       routeros_command:
         commands:
           - /ip address add address=("{{shopnet}}".".254/24") interface=LAN
-          - /ip address add address=("10.90.90.93/24") interface=LAN
     - name: Set DNS adresses
       routeros_command:
         commands:
@@ -79,9 +79,9 @@
     - name: Set VPN
       routeros_command:
         commands:
-          - /interface l2tp-client add name=FRN_EK connect-to=195.177.194.8 allow=mschap2 user=("FRN_"."_"."{{shopcode}}") password=("FRN_"."_"."{{shopcode}}"."FRN_"."_"."{{shopcode}}") disabled=no
+          - /interface l2tp-client add name=FRN_EK connect-to=195.177.194.8 allow=mschap2 user=("FRN_"."{{shopcode}}") password=("FRN_"."{{shopcode}}"."FRN_"."{{shopcode}}") disabled=no
           - /interface list member add interface=FRN_EK list=VPN
-          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("frn"."_"."{{shopcode}}") password=("frn"."_"."{{shopcode}}"."frn"."_"."{{shopcode}}")  disabled=no
+          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("frn"."{{shopcode}}") password=("frn"."{{shopcode}}"."frn"."{{shopcode}}")  disabled=no
           - /interface list member add interface=FRN_MS list=VPN
     - name: Set NAT
       routeros_command:
@@ -152,9 +152,13 @@
       routeros_command:
         commands:
           - /system logging action set 1 disk-file-name=log
-          - /system logging action set 3 remote=10.193.63.7 src-address=192.166.65.254
+          - /system logging action set 3 remote=10.193.63.7 src-address=("{{shopnet}}".".254")
           - /system logging add action=remote topics=info,!ospf,!pptp
           - /system logging add action=remote topics=account,!web-proxy
           - /system logging add action=remote topics=error,!ospf,!pptp
           - /system logging add action=remote topics=warning,!ospf,!pptp
           - /system logging add action=remote topics=critical,!ospf,!pptp
+    - name: Set shop name
+      routeros_command:
+        commands:
+          - /system identity set name=({{shopfullname}})
