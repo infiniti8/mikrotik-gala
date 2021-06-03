@@ -1,0 +1,11 @@
+- name: firewall_MEDIAPLAYER
+  hosts: BF
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: Addreslist_FIREWALL
+      routeros_command:
+        commands:
+        - /ip firewall address-list add address=94.103.235.250 list=MEDIA_PLAYER
+        - /ip firewall filter add action=accept chain=forward comment=MEDIA_PLAYER dst-address-list=MEDIA_PLAYER out-interface-list=WAN protocol=tcp place-before=[/ip firewall filter find chain=forward comment="WEB"]
+
