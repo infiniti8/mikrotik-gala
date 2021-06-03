@@ -24,21 +24,19 @@
     - name: Set interface list
       routeros_command:
         commands:
-          - /interface list
-          - add name=WAN
-          - add name=VPN
+          - /interface list add name=WAN
+          - /interface list add name=VPN
           - /interface list member add interface=ether1-ISP1 list=WAN
     - name: Set service
       routeros_command:
         commands:
-          - /ip service
-          - set telnet disabled=yes
-          - set ftp disabled=yes
-          - set www address=192.166.0.0/16
-          - set api disabled=yes
-          - set api-ssl disabled=yes
-          - set ssh address="192.168.48.0/22,195.151.193.165/32,192.168.12.0/24,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24"
-          - set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24,192.166.64.0/24"
+          - /ip service set telnet disabled=yes
+          - /ip service set ftp disabled=yes
+          - /ip service set www address=192.166.0.0/16
+          - /ip service set api disabled=yes
+          - /ip service set api-ssl disabled=yes
+          - /ip service set ssh address="192.168.48.0/22,195.151.193.165/32,192.168.12.0/24,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24"
+          - /ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24,192.166.64.0/24"
     - name: Disable SIP filtering
       routeros_command:
         commands:
@@ -61,9 +59,8 @@
     - name: Set IP adresses
       routeros_command:
         commands:
-          - /ip address
-          - add address=("{{shopnet}}".".254/24") interface=LAN
-          - add address=("10.90.90.93/24") interface=LAN
+          - /ip address add address=("{{shopnet}}".".254/24") interface=LAN
+          - /ip address add address=("10.90.90.93/24") interface=LAN
     - name: Set DNS adresses
       routeros_command:
         commands:
@@ -77,10 +74,8 @@
         commands:          
           - /ip dhcp-server option sets add name=set43 options=option43
           - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"{{shopnet}}.".220")
-          - /ip dhcp-server 
-          - add address-pool=poolwifi dhcp-option-set=set1 disabled=no interface=LAN name=dhcp1
-          - /ip dhcp-server network 
-          - add address=("{{shopnet}}".".0/24") gateway=("{{shopnet}}".".254") dns-server=("{{shopnet}}".".254") dhcp-option=option43 dhcp-option-set=set43
+          - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set1 disabled=no interface=LAN name=dhcp1
+          - /ip dhcp-server network add address=("{{shopnet}}".".0/24") gateway=("{{shopnet}}".".254") dns-server=("{{shopnet}}".".254") dhcp-option=option43 dhcp-option-set=set43
     - name: Set VPN
       routeros_command:
         commands:
@@ -92,83 +87,74 @@
       routeros_command:
         commands:
           - /ip firewall nat add action=masquerade chain=srcnat out-interface-list=WAN
-          - /ip firewall layer7-protocol
-          - add name=myway.local regexp=myway.local
-          - add name=galamart.ru regexp=galamart.ru
-          - add name=cs22.wpc.v0cdn.net regexp=cs22.wpc.v0cdn.net
-          - add name=apps.skype.com regexp=apps.skype.com
-          - add name=download.skype.com regexp=download.skype.com
-          - add name=galacentre.ru regexp=galacentre.ru
-          - /ip firewall nat
-          - add action=dst-nat chain=dstnat connection-mark=galamart.ru-fwd to-addresses=192.168.49.1
-          - add action=dst-nat chain=dstnat connection-mark=cs22.wpc.v0cdn.net-fwd to-addresses=192.168.49.1
-          - add action=dst-nat chain=dstnat connection-mark=apps.skype.com-fwd to-addresses=192.168.49.1
-          - add action=dst-nat chain=dstnat connection-mark=download.skype.com-fwd to-addresses=192.168.49.1
-          - add action=dst-nat chain=dstnat connection-mark=galacentre.ru-fwd to-addresses=192.168.49.1
-          - add action=dst-nat chain=dstnat connection-mark=myway.local-fwd to-addresses=192.168.49.1
+          - /ip firewall layer7-protocol add name=myway.local regexp=myway.local
+          - /ip firewall layer7-protocol add name=galamart.ru regexp=galamart.ru
+          - /ip firewall layer7-protocol add name=cs22.wpc.v0cdn.net regexp=cs22.wpc.v0cdn.net
+          - /ip firewall layer7-protocol add name=apps.skype.com regexp=apps.skype.com
+          - /ip firewall layer7-protocol add name=download.skype.com regexp=download.skype.com
+          - /ip firewall layer7-protocol add name=galacentre.ru regexp=galacentre.ru
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galamart.ru-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=cs22.wpc.v0cdn.net-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=apps.skype.com-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.skype.com-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galacentre.ru-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=myway.local-fwd to-addresses=192.168.49.1
 
     - name: Set firewall address-list
       routeros_command:
         commands:
-          - /ip firewall address-list 
-          - add address=192.168.48.27 list=InetAdmin comment="Suhanov Onegin"
-          - add address=192.168.48.2 list=InetAdmin comment="Nikita Onegin"
-          - add address=192.168.48.0/22 list=InetAdmin comment="Onegin All"
-          - add address=192.168.12.79 list=InetAdmin comment="Server Ansible"
-          - add address=10.193.63.7 list=InetAdmin comment="Server Ansible"
-          - add address=192.168.255.0/24 list=InetAdmin comment="netadmin"
-          - add address=194.190.106.86 list=InetAdmin comment="external LvaTolstogo"
-          - add address=195.151.193.165 list=InetAdmin comment="external Onegin"
-          - add address=79.172.1.40 list=InetAdmin comment="external Onegin Convex"
-          - add address=195.162.6.0/23 list=InetAdmin comment="AS207496 MSK"
-          - add address=195.177.194.0/23 list=InetAdmin comment="AS207496 EKB"
-          - add address=("{{shopnet}}".".0/24") list=LAN
+          - /ip firewall address-list add address=192.168.48.27 list=InetAdmin comment="Suhanov Onegin"
+          - /ip firewall address-list add address=192.168.48.2 list=InetAdmin comment="Nikita Onegin"
+          - /ip firewall address-list add address=192.168.48.0/22 list=InetAdmin comment="Onegin All"
+          - /ip firewall address-list add address=192.168.12.79 list=InetAdmin comment="Server Ansible"
+          - /ip firewall address-list add address=10.193.63.7 list=InetAdmin comment="Server Ansible"
+          - /ip firewall address-list add address=192.168.255.0/24 list=InetAdmin comment="netadmin"
+          - /ip firewall address-list add address=194.190.106.86 list=InetAdmin comment="external LvaTolstogo"
+          - /ip firewall address-list add address=195.151.193.165 list=InetAdmin comment="external Onegin"
+          - /ip firewall address-list add address=79.172.1.40 list=InetAdmin comment="external Onegin Convex"
+          - /ip firewall address-list add address=195.162.6.0/23 list=InetAdmin comment="AS207496 MSK"
+          - /ip firewall address-list add address=195.177.194.0/23 list=InetAdmin comment="AS207496 EKB"
+          - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=LAN
     - name: Set firewall filter input
       routeros_command:
         commands:
-          - /ip firewall filter 
-          - add action=accept chain=input comment="Accept input established connections" connection-state=established,related in-interface-list=WAN
-          - add action=accept chain=forward comment="Accept established connections" connection-state=established,related
-          - add action=drop chain=input comment="Drop input invalid connections" connection-state=invalid disabled=yes in-interface-list=WAN
-          - add action=accept chain=input comment="Accept input ICMP" in-interface-list=WAN protocol=icmp
-          - add action=accept chain=input comment="WinBox from Internet and LAN" dst-port=8291,22,80 protocol=tcp src-address-list=InetAdmin
-          - add action=drop chain=input comment="Drop input all" connection-nat-state=!dstnat disabled=yes in-interface-list=WAN
-          - add action=accept chain=forward comment=Ping protocol=icmp
-          - add action=accept chain=forward comment=Accept_VPN_OUT out-interface-list=VPN
-          - add action=accept chain=forward comment=Accept_VPN_IN in-interface-list=VPN
-          - add action=accept chain=forward comment="Internet acces" out-interface-list=WAN src-address-list=LAN
-          - add action=drop chain=forward comment="Drop all" connection-nat-state=!dstnat disabled=yes
+          - /ip firewall filter add action=accept chain=input comment="Accept input established connections" connection-state=established,related in-interface-list=WAN
+          - /ip firewall filter add action=accept chain=forward comment="Accept established connections" connection-state=established,related
+          - /ip firewall filter add action=drop chain=input comment="Drop input invalid connections" connection-state=invalid disabled=yes in-interface-list=WAN
+          - /ip firewall filter add action=accept chain=input comment="Accept input ICMP" in-interface-list=WAN protocol=icmp
+          - /ip firewall filter add action=accept chain=input comment="WinBox from Internet and LAN" dst-port=8291,22,80 protocol=tcp src-address-list=InetAdmin
+          - /ip firewall filter add action=drop chain=input comment="Drop input all" connection-nat-state=!dstnat disabled=yes in-interface-list=WAN
+          - /ip firewall filter add action=accept chain=forward comment=Ping protocol=icmp
+          - /ip firewall filter add action=accept chain=forward comment=Accept_VPN_OUT out-interface-list=VPN
+          - /ip firewall filter add action=accept chain=forward comment=Accept_VPN_IN in-interface-list=VPN
+          - /ip firewall filter add action=accept chain=forward comment="Internet acces" out-interface-list=WAN src-address-list=LAN
+          - /ip firewall filter add action=drop chain=forward comment="Drop all" connection-nat-state=!dstnat disabled=yes
     - name: Set firewall mangle
       routeros_command:
         commands: 
-          - /ip firewall mangle
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=myway.local log=yes new-connection-mark=myway.local-fwd passthrough=yes protocol=udp
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=galacentre.ru new-connection-mark=galacentre.ru-fwd passthrough=yes protocol=udp
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=apps.skype.com new-connection-mark=apps.skype.com-fwd passthrough=yes protocol=udp
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
-          - add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=galamart.ru new-connection-mark=galamart.ru-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=myway.local log=yes new-connection-mark=myway.local-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=galacentre.ru new-connection-mark=galacentre.ru-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=apps.skype.com new-connection-mark=apps.skype.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=galamart.ru new-connection-mark=galamart.ru-fwd passthrough=yes protocol=udp
     - name: Set BGP
       routeros_command:
         commands:
           - /routing ospf instance set [ find default=yes ] router-id=("{{shopnet}}".".254")
-          - /routing ospf interface
-          - add interface=LAN network-type=broadcast passive=yes
-          - add authentication=md5 authentication-key=ehjdtym0 interface=FRN_MS network-type=point-to-point
-          - add authentication=md5 authentication-key=ehjdtym0 interface=FRN_EK network-type=point-to-point
-          - /routing ospf network
-          - add area=backbone network=("{{shopnet}}".".0/24")
-          - add area=backbone network=10.193.248.0/22
-          - add area=backbone network=10.192.248.0/22
+          - /routing ospf interface add interface=LAN network-type=broadcast passive=yes
+          - /routing ospf interface add authentication=md5 authentication-key=ehjdtym0 interface=FRN_MS network-type=point-to-point
+          - /routing ospf interface add authentication=md5 authentication-key=ehjdtym0 interface=FRN_EK network-type=point-to-point
+          - /routing ospf network add area=backbone network=("{{shopnet}}".".0/24")
+          - /routing ospf network add area=backbone network=10.193.248.0/22
+          - /routing ospf network add area=backbone network=10.192.248.0/22
     - name: Set log
       routeros_command:
         commands:
-          - /system logging action
-          - set 1 disk-file-name=log
-          - set 3 remote=10.193.63.7 src-address=192.166.65.254
-          - /system logging
-          - add action=remote topics=info,!ospf,!pptp
-          - add action=remote topics=account,!web-proxy
-          - add action=remote topics=error,!ospf,!pptp
-          - add action=remote topics=warning,!ospf,!pptp
-          - add action=remote topics=critical,!ospf,!pptp
+          - /system logging action set 1 disk-file-name=log
+          - /system logging action set 3 remote=10.193.63.7 src-address=192.166.65.254
+          - /system logging add action=remote topics=info,!ospf,!pptp
+          - /system logging add action=remote topics=account,!web-proxy
+          - /system logging add action=remote topics=error,!ospf,!pptp
+          - /system logging add action=remote topics=warning,!ospf,!pptp
+          - /system logging add action=remote topics=critical,!ospf,!pptp
