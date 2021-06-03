@@ -3,10 +3,8 @@
   gather_facts: false
   connection: network_cli
   vars:
-    shopname:
     shopcode:
     shopnet:
-    vpnpass:
   tasks:
     - name: Set interface name
       routeros_command:
@@ -88,9 +86,9 @@
     - name: Set VPN
       routeros_command:
         commands:
-          - /interface l2tp-client add name=FRN_EK connect-to=195.177.194.8 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=({{vpnpass}}) disabled=no
+          - /interface l2tp-client add name=FRN_EK connect-to=195.177.194.8 allow=mschap2 user=("FRN_"."_"."{{shopcode}}") password=("FRN_"."_"."{{shopcode}}"."FRN_"."_"."{{shopcode}}") disabled=no
           - /interface list member add interface=FRN_EK list=VPN
-          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=({{vpnpass}})  disabled=no
+          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("frn"."_"."{{shopcode}}") password=("frn"."_"."{{shopcode}}"."frn"."_"."{{shopcode}}")  disabled=no
           - /interface list member add interface=FRN_MS list=VPN
     - name: Set NAT
       routeros_command:
@@ -164,3 +162,15 @@
           - add area=backbone network=("{{shopnet}}".".0/24")
           - add area=backbone network=10.193.248.0/22
           - add area=backbone network=10.192.248.0/22
+    - name: Set log
+      routeros_command:
+        commands:
+          - /system logging action
+          - set 1 disk-file-name=log
+          - set 3 remote=10.193.63.7 src-address=192.166.65.254
+          - /system logging
+          - add action=remote topics=info,!ospf,!pptp
+          - add action=remote topics=account,!web-proxy
+          - add action=remote topics=error,!ospf,!pptp
+          - add action=remote topics=warning,!ospf,!pptp
+          - add action=remote topics=critical,!ospf,!pptp
