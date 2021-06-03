@@ -164,3 +164,15 @@
           - add area=backbone network=("{{shopnet}}".".0/24")
           - add area=backbone network=10.193.248.0/22
           - add area=backbone network=10.192.248.0/22
+    - name: Set log
+      routeros_command:
+        commands:
+          - /system logging action
+          - set 1 disk-file-name=log
+          - set 3 remote=10.193.63.7 src-address=192.166.65.254
+          - /system logging
+          - add action=remote topics=info,!ospf,!pptp
+          - add action=remote topics=account,!web-proxy
+          - add action=remote topics=error,!ospf,!pptp
+          - add action=remote topics=warning,!ospf,!pptp
+          - add action=remote topics=critical,!ospf,!pptp
