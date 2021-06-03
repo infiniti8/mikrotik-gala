@@ -1,5 +1,5 @@
 - name: SWITCH VLAN
-  hosts: onedlink
+  hosts: AllMPR60Switch
   gather_facts: false
   connection: local
   tasks:
