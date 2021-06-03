@@ -138,7 +138,7 @@
           - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=apps.skype.com new-connection-mark=apps.skype.com-fwd passthrough=yes protocol=udp
           - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
           - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=192.166.176.254 dst-port=53 layer7-protocol=galamart.ru new-connection-mark=galamart.ru-fwd passthrough=yes protocol=udp
-    - name: Set BGP
+    - name: Set OSPF
       routeros_command:
         commands:
           - /routing ospf instance set [ find default=yes ] router-id=("{{shopnet}}".".254")
