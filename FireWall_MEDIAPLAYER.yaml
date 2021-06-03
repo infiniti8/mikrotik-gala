@@ -1,5 +1,5 @@
 - name: firewall_MEDIAPLAYER
-  hosts: BF
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
   tasks:
