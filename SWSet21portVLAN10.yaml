@@ -1,0 +1,6 @@
+name: firewall
+  hosts: 
+  gather_facts: false
+    - name: SWITCH VLAN 21 port
+      raw: config vlan default delete 21
+      raw: config vlan Data add untagged 21
