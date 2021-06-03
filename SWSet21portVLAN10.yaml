@@ -4,8 +4,13 @@ gather_facts: false
 connectionon: network_cli
 tasks:
   - name: VLAN default port DELETED
-    raw: config vlan default delete 21
-  - name: VLAN 21 port ADD
-    raw: config vlan Data add untagged 21
-  - name: SAVE
-    raw: save
+    telnet:
+      user: admin
+      password: Crkthjp2
+      login_prompt: "Username: "
+      prompts:
+        - "[>|#]"
+      command:
+        - config vlan default delete 21
+        - config vlan Data add untagged 21
+        - save
