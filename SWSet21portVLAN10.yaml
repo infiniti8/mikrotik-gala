@@ -1,7 +1,7 @@
 - name: SWITCH VLAN
   hosts: onedlink
   gather_facts: false
-  connectionon: network_cli
+  connection: network_cli
   tasks:
     - name: VLAN default port DELETED
       telnet:
