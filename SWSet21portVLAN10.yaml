@@ -3,16 +3,16 @@
   gather_facts: false
   connection: local
   vars:
-    getpass:
-  tasks:
-    - name: VLAN default port DELETED
-      telnet:
-        user: admin
-        password: "{{getpass}}"
-        login_prompt: "UserName: "
-        prompts:
+  getpass:
+    tasks:
+      - name: set VLAN10 to 21 port
+        telnet:
+          user: admin
+          password: "{{getpass}}"
+          login_prompt: "UserName: "
+          prompts:
           - "[>|#]"
-        command:
-          - config vlan default delete 21
-          - config vlan Data add untagged 21
-          - save
+          command:
+            - config vlan default delete 21
+            - config vlan Data add untagged 21
+            - save
