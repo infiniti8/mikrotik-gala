@@ -2,11 +2,13 @@
   hosts: all
   gather_facts: false
   connection: local
+  vars:
+    getpass:
   tasks:
     - name: VLAN default port DELETED
       telnet:
         user: admin
-        password: Crkthjp2
+        password: {{getpass}}
         login_prompt: "UserName: "
         prompts:
           - "[>|#]"
