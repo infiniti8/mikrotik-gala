@@ -161,4 +161,4 @@
     - name: Set shop name
       routeros_command:
         commands:
-          - /system identity set name=({{shopfullname}})
+          - /system identity set name=("{{shopfullname}}")

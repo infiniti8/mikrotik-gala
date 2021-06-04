@@ -7,6 +7,7 @@
     shopcode:
     shopnet:
     vpnpass:
+    shopfullname:
   tasks:
     - name: Add Bridge
       routeros_command:
@@ -79,7 +80,6 @@
           - /system clock set time-zone-autodetect=no
           - /system clock manual set time-zone=+05:00
           - /system ntp client set enabled=yes primary-ntp=192.36.143.130 secondary-ntp=194.190.168.1
-          - /system identity set name=("{{shopname}}"."_"."{{shopcode}}")
           - /system package update set channel=long-term
           - /ip ipsec profile set [ find default=yes ] enc-algorithm=aes-128
           - /ip neighbor discovery-settings set discover-interface-list=!WAN
@@ -194,3 +194,7 @@
           - add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=6s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
+    - name: Set shop name
+      routeros_command:
+        commands:
+          - /system identity set name=("{{shopfullname}}")
