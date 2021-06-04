@@ -6,5 +6,6 @@
     - name: Addreslist_FIREWALL
       routeros_command:
         commands:
-        - /ip firewall address-list add address=94.103.235.250 list=Mediaplayer
-        - /ip firewall filter add action=accept chain=forward comment=Mediaplayer dst-address-list=Mediaplayer out-interface-list=WAN protocol=tcp place-before=[/ip firewall filter find chain=forward comment="WEB"]
+        - /ip firewall address-list add address=94.103.235.250 list=MediaPlayer
+        - /ip firewall filter add action=accept chain=forward comment=MediaPlayer dst-address-list=MediaPlayer out-interface-list=WAN place-before=[/ip firewall filter find chain=forward comment="WEB"]
+      when: '"192.167." in ansible_ssh_host'  
