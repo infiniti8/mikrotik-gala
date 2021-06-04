@@ -19,19 +19,17 @@
     - name: Add Vlans
       routeros_command:
         commands:
-          - /interface bridge vlan
-          - add bridge=bridge1 tagged=bridge1 untagged=ether3,ether4,ether5 vlan-ids=10
-          - add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=20
-          - add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=30
-          - add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=40
+          - /interface bridge vlan add bridge=bridge1 tagged=bridge1 untagged=ether3,ether4,ether5 vlan-ids=10
+          - /interface bridge vlan add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=20
+          - /interface bridge vlan add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=30
+          - /interface bridge vlan add bridge=bridge1 tagged=bridge1,ether3,ether4,ether5 vlan-ids=40
     - name: Add Vlan interface
       routeros_command:
         commands:
-          - /interface vlan
-          - add interface=bridge1 vlan-id=10 name=VLAN10
-          - add interface=bridge1 vlan-id=20 name=VLAN20
-          - add interface=bridge1 vlan-id=30 name=VLAN30
-          - add interface=bridge1 vlan-id=40 name=VLAN40
+          - /interface vlan add interface=bridge1 vlan-id=10 name=VLAN10
+          - /interface vlan add interface=bridge1 vlan-id=20 name=VLAN20
+          - /interface vlan add interface=bridge1 vlan-id=30 name=VLAN30
+          - /interface vlan add interface=bridge1 vlan-id=40 name=VLAN40
     - name: Set brige vlan filtering
       routeros_command:
         commands:
@@ -39,27 +37,24 @@
     - name: Set interface list
       routeros_command:
         commands:
-          - /interface list
-          - add name=WAN
-          - add name=LAN
-          - add name=VPN
-          - add name=GUEST
-          - /interface list member
-          - add interface=ether1-ISP1 list=WAN
-          - add interface=ether2-ISP2 list=WAN
-          - add interface=VLAN30 list=GUEST
-          - add interface=VLAN10 list=LAN
-          - add interface=VLAN20 list=LAN
-          - add interface=VLAN40 list=LAN
+          - /interface list add name=WAN
+          - /interface list add name=LAN
+          - /interface list add name=VPN
+          - /interface list add name=GUEST
+          - /interface list member add interface=ether1-ISP1 list=WAN
+          - /interface list member add interface=ether2-ISP2 list=WAN
+          - /interface list member add interface=VLAN30 list=GUEST
+          - /interface list member add interface=VLAN10 list=LAN
+          - /interface list member add interface=VLAN20 list=LAN
+          - /interface list member add interface=VLAN40 list=LAN
     - name: Set service
       routeros_command:
         commands:
-          - /ip service
-          - set telnet disabled=yes
-          - set ftp disabled=yes
-          - set www disabled=yes
-          - set api disabled=yes
-          - set api-ssl disabled=yes
+          - /ip service set telnet disabled=yes
+          - /ip service set ftp disabled=yes
+          - /ip service set www disabled=yes
+          - /ip service set api disabled=yes
+          - /ip service set api-ssl disabled=yes
     - name: Disable SIP filtering
       routeros_command:
         commands:
@@ -86,12 +81,11 @@
     - name: Set IP adresses
       routeros_command:
         commands:
-          - /ip address
-          - add address=("{{shopnet}}".".62/26") interface=VLAN10
-          - add address=("{{shopnet}}".".126/26") interface=VLAN40
-          - add address=("{{shopnet}}".".190/26") interface=VLAN30
-          - add address=("{{shopnet}}".".254/26") interface=VLAN20
-          - add address=("10.90.90.93/24") interface=VLAN10
+          - /ip address add address=("{{shopnet}}".".62/26") interface=VLAN10
+          - /ip address add address=("{{shopnet}}".".126/26") interface=VLAN40
+          - /ip address add address=("{{shopnet}}".".190/26") interface=VLAN30
+          - /ip address add address=("{{shopnet}}".".254/26") interface=VLAN20
+          - /ip address add address=("10.90.90.93/24") interface=VLAN10
     - name: Set DNS adresses
       routeros_command:
         commands:
@@ -104,21 +98,18 @@
       routeros_command:
         commands:          
           - /ip dhcp-server option sets add name=set43 options=option43
-          - /ip pool 
-          - add name=pool-10 ranges=("{{shopnet}}".".51-".$ShopNet.".59")
-          - add name=pool-40 ranges=("{{shopnet}}".".70-".$ShopNet.".125")
-          - add name=pool-30 ranges=("{{shopnet}}".".129-".$ShopNet.".189")
-          - add name=pool-20 ranges=("{{shopnet}}".".193-".$ShopNet.".253")
-          - /ip dhcp-server 
-          - add address-pool=pool-10 interface=VLAN10 lease-time=1h name=dhcp-server-10 disabled=no
-          - add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=yes
-          - add address-pool=pool-30 interface=VLAN30 lease-time=1h name=dhcp-server-30 disabled=no
-          - add address-pool=pool-40 interface=VLAN40 lease-time=24h name=dhcp-server-40 disabled=no
-          - /ip dhcp-server network 
-          - add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=192.168.49.1,192.168.12.7 
-          - add address=("{{shopnet}}".".64/26") gateway=("{{shopnet}}".".126") dns-server=192.168.49.1,192.168.12.7  dhcp-option=option43 dhcp-option-set=set43
-          - add address=("{{shopnet}}".".128/26") gateway=("{{shopnet}}".".190") dns-server=77.88.8.88,77.88.8.2
-          - add address=("{{shopnet}}".".192/26") gateway=("{{shopnet}}".".254") dns-server=192.168.49.1,192.168.12.7
+          - /ip pool add name=pool-10 ranges=("{{shopnet}}".".51-"."{{shopnet}}".".59")
+          - /ip pool add name=pool-40 ranges=("{{shopnet}}".".70-"."{{shopnet}}".".125")
+          - /ip pool add name=pool-30 ranges=("{{shopnet}}".".129-"."{{shopnet}}".".189")
+          - /ip pool add name=pool-20 ranges=("{{shopnet}}".".193-"."{{shopnet}}".".253")
+          - /ip dhcp-server add address-pool=pool-10 interface=VLAN10 lease-time=1h name=dhcp-server-10 disabled=no
+          - /ip dhcp-server add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=yes
+          - /ip dhcp-server add address-pool=pool-30 interface=VLAN30 lease-time=1h name=dhcp-server-30 disabled=no
+          - /ip dhcp-server add address-pool=pool-40 interface=VLAN40 lease-time=24h name=dhcp-server-40 disabled=no
+          - /ip dhcp-server network add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=192.168.49.1,192.168.12.7 
+          - /ip dhcp-server network add address=("{{shopnet}}".".64/26") gateway=("{{shopnet}}".".126") dns-server=192.168.49.1,192.168.12.7  dhcp-option=option43 dhcp-option-set=set43
+          - /ip dhcp-server network add address=("{{shopnet}}".".128/26") gateway=("{{shopnet}}".".190") dns-server=77.88.8.88,77.88.8.2
+          - /ip dhcp-server network add address=("{{shopnet}}".".192/26") gateway=("{{shopnet}}".".254") dns-server=192.168.49.1,192.168.12.7
     - name: Set VPN
       routeros_command:
         commands:
@@ -133,65 +124,59 @@
     - name: Set firewall address-list
       routeros_command:
         commands:
-          - /ip firewall address-list 
-          - add address=192.168.48.27 list=Admin comment="Suhanov Onegin"
-          - add address=192.168.48.2 list=Admin comment="Nikita Onegin"
-          - add address=192.168.48.0/22 list=Admin comment="Onegin All"
-          - add address=192.168.12.79 list=Admin comment="Server Ansible"
-          - add address=10.193.63.7 list=Admin comment="Server Ansible"
-          - add address=192.168.255.0/24 list=Admin comment="netadmin"
-          - add address=194.190.106.86 list=Admin comment="external LvaTolstogo"
-          - add address=195.151.193.165 list=Admin comment="external Onegin"
-          - add address=79.172.1.40 list=Admin comment="external Onegin Convex"
-          - add address=195.162.6.0/23 list=Admin comment="AS207496 MSK"
-          - add address=195.177.194.0/23 list=Admin comment="AS207496 EKB"
-          - add address=192.168.12.52 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
-          - add address=10.193.63.21 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
-          - add address=192.168.12.53 list=SNMP_Monitor comment="Zabbix Telecom Gagarin"
-          - add address=10.192.63.3 list=SNMP_Monitor comment="Zabbix Telecom Dataspace"
-          - add address=("{{shopnet}}".".1") list=Internet
-          - add address=("{{shopnet}}".".128/26") list=Internet
-          - add address=("{{shopnet}}".".0/24") list=Internet
-          - add address=192.168.0.0/16 list=Proxy 
+          - /ip firewall address-list add address=192.168.48.27 list=Admin comment="Suhanov Onegin"
+          - /ip firewall address-list add address=192.168.48.2 list=Admin comment="Nikita Onegin"
+          - /ip firewall address-list add address=192.168.48.0/22 list=Admin comment="Onegin All"
+          - /ip firewall address-list add address=192.168.12.79 list=Admin comment="Server Ansible"
+          - /ip firewall address-list add address=10.193.63.7 list=Admin comment="Server Ansible"
+          - /ip firewall address-list add address=192.168.255.0/24 list=Admin comment="netadmin"
+          - /ip firewall address-list add address=194.190.106.86 list=Admin comment="external LvaTolstogo"
+          - /ip firewall address-list add address=195.151.193.165 list=Admin comment="external Onegin"
+          - /ip firewall address-list add address=79.172.1.40 list=Admin comment="external Onegin Convex"
+          - /ip firewall address-list add address=195.162.6.0/23 list=Admin comment="AS207496 MSK"
+          - /ip firewall address-list add address=195.177.194.0/23 list=Admin comment="AS207496 EKB"
+          - /ip firewall address-list add address=192.168.12.52 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
+          - /ip firewall address-list add address=10.193.63.21 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
+          - /ip firewall address-list add address=192.168.12.53 list=SNMP_Monitor comment="Zabbix Telecom Gagarin"
+          - /ip firewall address-list add address=10.192.63.3 list=SNMP_Monitor comment="Zabbix Telecom Dataspace"
+          - /ip firewall address-list add address=("{{shopnet}}".".1") list=Internet
+          - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
+          - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
+          - /ip firewall address-list add address=192.168.0.0/16 list=Proxy 
     - name: Set firewall filter input
       routeros_command:
         commands:
-          - /ip firewall filter 
-          - add chain=input action=accept connection-state=established,related,untracked comment="Accept established,related,untracked"
-          - add chain=input action=drop connection-state=invalid comment="Drop invalid"
-          - add chain=input action=accept protocol=icmp comment="Accept ICMP"
-          - add chain=input action=accept in-interface-list=LAN protocol=udp dst-port=53 comment="Accept DNS request from LAN"
-          - add chain=input action=accept src-address-list=Admin comment="Accept access from AdminIP group"
-          - add action=accept chain=input in-interface-list=VPN protocol=tcp dst-port=179 comment=BGP
-          - add chain=input action=accept in-interface-list=VPN src-address-list=SNMP_Monitor comment="Accept access to SNMP"
-          - add chain=input action=accept src-address-list=Proxy protocol=tcp dst-port=3128 comment="Accept access to MT Proxy for Proxy group"
-          - add chain=input action=drop comment="Drop All other Input"
+          - /ip firewall filter add chain=input action=accept connection-state=established,related,untracked comment="Accept established,related,untracked"
+          - /ip firewall filter add chain=input action=drop connection-state=invalid comment="Drop invalid"
+          - /ip firewall filter add chain=input action=accept protocol=icmp comment="Accept ICMP"
+          - /ip firewall filter add chain=input action=accept in-interface-list=LAN protocol=udp dst-port=53 comment="Accept DNS request from LAN"
+          - /ip firewall filter add chain=input action=accept src-address-list=Admin comment="Accept access from AdminIP group"
+          - /ip firewall filter add action=accept chain=input in-interface-list=VPN protocol=tcp dst-port=179 comment=BGP
+          - /ip firewall filter add chain=input action=accept in-interface-list=VPN src-address-list=SNMP_Monitor comment="Accept access to SNMP"
+          - /ip firewall filter add chain=input action=accept src-address-list=Proxy protocol=tcp dst-port=3128 comment="Accept access to MT Proxy for Proxy group"
+          - /ip firewall filter add chain=input action=drop comment="Drop All other Input"
     - name: Set firewall filter forward
       routeros_command:
         commands:
-          - /ip firewall filter 
-          - add chain=forward action=fasttrack-connection connection-state=established,related disabled=yes comment="fasttrack"
-          - add chain=forward action=accept connection-state=established,related,untracked comment="Accept established,related,untracked"
-          - add action=drop chain=forward connection-state=invalid comment="Drop invalid"
-          - add chain=forward action=accept in-interface-list=LAN out-interface-list=LAN comment="Accept access from LAN to LAN"
-          - add chain=forward action=accept in-interface-list=LAN out-interface-list=VPN comment="Accept access from LAN to VPN"
-          - add chain=forward action=accept src-address-list=SNMP_Monitor in-interface-list=VPN comment="Accept access to SNMP from VPN"
-          - add chain=forward action=accept in-interface-list=VPN out-interface-list=LAN comment="Accept access from VPN to LAN"
-          - add action=jump chain=forward comment="Jump access to Internet" connection-state=new jump-target=to_Internet out-interface-list=WAN
-          - add chain=forward action=drop comment="Drop All other Forward"
-          - add action=accept chain=to_Internet comment="Accept access to Internet for WiFi Guest" in-interface=VLAN40
-          - add action=accept chain=to_Internet comment="Accept access to Internet for Internet group" src-address-list=Internet
+          - /ip firewall filter add chain=forward action=fasttrack-connection connection-state=established,related disabled=yes comment="fasttrack"
+          - /ip firewall filter add chain=forward action=accept connection-state=established,related,untracked comment="Accept established,related,untracked"
+          - /ip firewall filter add action=drop chain=forward connection-state=invalid comment="Drop invalid"
+          - /ip firewall filter add chain=forward action=accept in-interface-list=LAN out-interface-list=LAN comment="Accept access from LAN to LAN"
+          - /ip firewall filter add chain=forward action=accept in-interface-list=LAN out-interface-list=VPN comment="Accept access from LAN to VPN"
+          - /ip firewall filter add chain=forward action=accept src-address-list=SNMP_Monitor in-interface-list=VPN comment="Accept access to SNMP from VPN"
+          - /ip firewall filter add chain=forward action=accept in-interface-list=VPN out-interface-list=LAN comment="Accept access from VPN to LAN"
+          - /ip firewall filter add action=jump chain=forward comment="Jump access to Internet" connection-state=new jump-target=to_Internet out-interface-list=WAN
+          - /ip firewall filter add chain=forward action=drop comment="Drop All other Forward"
+          - /ip firewall filter add action=accept chain=to_Internet comment="Accept access to Internet for WiFi Guest" in-interface=VLAN40
+          - /ip firewall filter add action=accept chain=to_Internet comment="Accept access to Internet for Internet group" src-address-list=Internet
     - name: Set BGP
       routeros_command:
         commands:
-          - /routing bgp instance
-          - set default as=65000 router-id=("{{shopnet}}".".254")
-          - /routing filter
-          - add action=accept chain=bgp-out prefix=("{{shopnet}}".".0/24")
-          - add action=discard chain=bgp-out
-          - /routing bgp peer
-          - add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
-          - add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=6s out-filter=bgp-out
+          - /routing bgp instance set default as=65000 router-id=("{{shopnet}}".".254")
+          - /routing filter add action=accept chain=bgp-out prefix=("{{shopnet}}".".0/24")
+          - /routing filter add action=discard chain=bgp-out
+          - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
     - name: Set shop name
