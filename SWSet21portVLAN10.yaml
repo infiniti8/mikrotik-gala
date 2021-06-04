@@ -8,7 +8,7 @@
     - name: VLAN default port DELETED
       telnet:
         user: admin
-        password: {{getpass}}
+        password: "{{getpass}}"
         login_prompt: "UserName: "
         prompts:
           - "[>|#]"
