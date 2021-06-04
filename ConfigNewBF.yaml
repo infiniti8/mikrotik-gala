@@ -113,9 +113,9 @@
     - name: Set VPN
       routeros_command:
         commands:
-          - /interface l2tp-client add name=MPR_EK connect-to=195.177.194.8 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=({{vpnpass}}) disabled=no
+          - /interface l2tp-client add name=MPR_EK connect-to=195.177.194.8 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=("{{vpnpass}}") disabled=no
           - /interface list member add interface=MPR_EK list=VPN
-          - /interface l2tp-client add name=MPR_MS connect-to=195.162.6.9 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=({{vpnpass}})  disabled=no
+          - /interface l2tp-client add name=MPR_MS connect-to=195.162.6.9 allow=mschap2 user=("{{shopname}}"."_"."{{shopcode}}") password=("{{vpnpass}}")  disabled=no
           - /interface list member add interface=MPR_MS list=VPN
     - name: Set NAT
       routeros_command:
