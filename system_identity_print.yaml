@@ -7,7 +7,3 @@
       routeros_command:
         commands:
         - /system identity print
-      register: routeros_resources
-    - name: debug print
-      debug: var=routeros_resources.stdout_lines
-        
