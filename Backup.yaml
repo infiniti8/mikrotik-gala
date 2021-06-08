@@ -5,7 +5,7 @@
     backup_file: "{{ ansible_ssh_host }}-{{ ansible_date_time.date }}.backup"
   tasks:
     - name: export config
-      community.routeros.facts:
+      routeros_facts:
         gather_subset: config
       register: config
     - name: save output
