@@ -1,0 +1,9 @@
+- name: system identity
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: get system identity
+      routeros_command:
+        commands:
+        - /system identity print
