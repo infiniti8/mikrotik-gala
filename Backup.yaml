@@ -3,11 +3,7 @@
   gather_facts: false
   connection: network_cli
   vars:
-<<<<<<< HEAD
     backup_file: "{{ ansible_ssh_host }}-{{ ansible_date_time.date }}.backup"
-=======
-    backup_file: "{{ name }}-{{ ansible_date_time.date }}.backup"
->>>>>>> ebb26838837b3a3b021793c8b62f1ff638761bdd
   tasks:
     - name: export config
       routeros_command:
