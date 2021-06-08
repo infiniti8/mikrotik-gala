@@ -1,5 +1,5 @@
 - name: backup
-  hosts: GALA_MikroTik_MPR
+  hosts: GALA_MikroTik_FRN
   gather_facts: false
   connection: network_cli
   vars:
@@ -10,4 +10,4 @@
       routeros_facts:
         gather_subset: config
     - name: save output
-      local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/MRP/{{ backup_file }}
+      local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/FRN/{{ backup_file }}
