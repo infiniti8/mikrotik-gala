@@ -1,12 +1,12 @@
 - name: backup
   hosts: BF
+  gather_facts: false
   connection: network_cli
   vars:
-    backup_file: "{{ ansible_ssh_host }}-{{ ansible_date_time.date }}.backup"
+    backup_file: "{{ ansible_ssh_host }}.backup"
   tasks:
     - name: export config
       routeros_facts:
         gather_subset: config
-      register: config
     - name: save output
-      local_action: copy content={{ config.stdout }} dest=/var/lib/awx/projects/mikrotik/MRP/{{ backup_file }}
+      local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/MRP/{{ backup_file }}
