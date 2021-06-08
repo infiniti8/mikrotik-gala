@@ -1,9 +1,14 @@
-- name: firewall
+- name: backup
   hosts: BF
   gather_facts: false
   connection: network_cli
+  vars:
+  backup_file: "{{ name }}-{{ ansible_date_time.date }}.backup"
   tasks:
-    - name: set SNMP community
+    - name: export config
       routeros_command:
-        commands:
-          - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
+        commands:"/system backup save dont-encrypt=yes name={{ backup_file }}"
+            - name: Скачивание бэкапа
+              net_get:
+                  src: "{{ backup_file }}"
+                  dest : "/var/backups/mikrotik/{{ backup_file }}"
