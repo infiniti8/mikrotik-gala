@@ -3,12 +3,13 @@
   gather_facts: false
   connection: network_cli
   vars:
-  backup_file: "{{ name }}-{{ ansible_date_time.date }}.backup"
+    backup_file: "{{ name }}-{{ ansible_date_time.date }}.backup"
   tasks:
     - name: export config
       routeros_command:
-        commands:"/system backup save dont-encrypt=yes name={{ backup_file }}"
-            - name: Скачивание бэкапа
-              net_get:
-                  src: "{{ backup_file }}"
-                  dest : "/var/backups/mikrotik/{{ backup_file }}"
+        commands:
+          - /system backup save dont-encrypt=yes name="{{ backup_file }}"
+    - name: get file
+      net_get:
+        src: "{{ backup_file }}"
+        dest : "/var/lib/awx/projects/mikrotik/{{ backup_file }}"
