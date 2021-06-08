@@ -7,6 +7,5 @@
     - name: export config
       routeros_facts:
         gather_subset: config
-      register: config
     - name: save output
-      local_action: copy content={{ config.stdout }} dest=/var/lib/awx/projects/mikrotik/MRP/{{ backup_file }}
+      local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/MRP/{{ backup_file }}
