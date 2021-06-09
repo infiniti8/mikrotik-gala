@@ -1,5 +1,5 @@
 - name: backup
-  hosts: GALA_MikroTik_Office
+  hosts: GALA_Mikrotik_Office
   gather_facts: false
   connection: network_cli
   vars:
