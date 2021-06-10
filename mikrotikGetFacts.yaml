@@ -1,5 +1,5 @@
 - name: Get Facts
-  hosts: GALA_MikroTik_MPR:GALA_MikroTik_FRN:GALA_Mikrotik_Office
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
   vars:
@@ -7,4 +7,6 @@
   tasks:
     - name: get facts
       routeros_facts:
-        gather_subset: "!config"
+        gather_subset:
+          - hardware
+          - interfaces
