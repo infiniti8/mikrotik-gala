@@ -1,0 +1,10 @@
+- name: Get Facts
+  hosts: GALA_MikroTik_MPR:GALA_MikroTik_FRN:GALA_Mikrotik_Office
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: get facts
+      routeros_facts:
+        gather_subset: "!config"
