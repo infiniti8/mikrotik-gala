@@ -74,8 +74,8 @@
       routeros_command:
         commands:          
           - /ip dhcp-server option sets add name=set43 options=option43
-          - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"{{shopnet}}".".220")
-          - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set1 disabled=no interface=LAN name=dhcp1
+          - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"."{{shopnet}}".".220")
+          - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set43 disabled=no interface=LAN name=dhcp1
           - /ip dhcp-server network add address=("{{shopnet}}".".0/24") gateway=("{{shopnet}}".".254") dns-server=("{{shopnet}}".".254") dhcp-option=option43 dhcp-option-set=set43
     - name: Set VPN
       routeros_command:
