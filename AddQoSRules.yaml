@@ -1,0 +1,37 @@
+- name: system identity
+  hosts: GALA_MikroTik_MPR:GALA_MikroTik_FRN:GALA_Mikrotik_Office
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: get system identity
+      routeros_command:
+        commands:
+        - /ip firewall mangle add action=change-dscp chain=prerouting dscp=!0 in-interface-list=WAN new-dscp=0 passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=46 new-connection-mark=Voice passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=40 new-connection-mark=Voice passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=16 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=18 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=20 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=22 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=24 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=26 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=28 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=30 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=32 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=34 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=36 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=38 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=48 new-connection-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=14 new-connection-mark=Low passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=12 new-connection-mark=Low passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=10 new-connection-mark=Low passthrough=no
+        - /ip firewall mangle add action=mark-connection chain=prerouting dscp=8 new-connection-mark=Low passthrough=no
+        - /ip firewall mangle add action=mark-packet chain=postrouting connection-mark=Voice new-packet-mark=Voice passthrough=no
+        - /ip firewall mangle add action=mark-packet chain=postrouting connection-mark=High new-packet-mark=High passthrough=no
+        - /ip firewall mangle add action=mark-packet chain=postrouting connection-mark=Low new-packet-mark=Low passthrough=no
+        - /queue tree add name=Outbound parent=global priority=1
+        - /queue tree add name=Voice packet-mark=Voice parent=Outbound priority=1 queue=ethernet-default
+        - /queue tree add name=High packet-mark=High parent=Outbound priority=2 queue=ethernet-default
+        - /queue tree add name=Normal packet-mark=no-mark parent=Outbound priority=3 queue=ethernet-default
+        - /queue tree add name=Low packet-mark=Low parent=Outbound priority=4 queue=ethernet-default
+
