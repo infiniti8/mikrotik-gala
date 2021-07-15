@@ -1,9 +1,9 @@
-- name: system identity
+- name: system CoS config
   hosts: GALA_Mikrotik_Office
   gather_facts: false
   connection: network_cli
   tasks:
-    - name: get system identity
+    - name: set QoS
       routeros_command:
         commands:
         - /ip firewall mangle add action=change-dscp chain=prerouting dscp=!0 in-interface-list=WAN new-dscp=0 passthrough=no
