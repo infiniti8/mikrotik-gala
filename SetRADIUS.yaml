@@ -1,5 +1,5 @@
 - name: Radius client config
-  hosts: GALA_MikroTik_MPR
+  hosts: GALA_MikroTik_FRN
   gather_facts: false
   connection: network_cli
   tasks:
