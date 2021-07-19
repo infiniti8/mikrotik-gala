@@ -1,0 +1,11 @@
+- name: Radius client config
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: set RADIUS
+      routeros_command:
+        commands:
+        - /radius remove [/radius find address=192.168.49.6]
+        - /radius add address=10.193.63.22 secret=rjhj,jxrf89 service=login
+        - /user aaa set use-radius=yes

@@ -3,6 +3,7 @@
   gather_facts: false
   connection: network_cli
   vars:
+    ansible_command_timeout: 180
     shopcode:
     shopnet:
     shopfullname:
@@ -36,7 +37,7 @@
           - /ip service set www address=192.166.0.0/16
           - /ip service set api disabled=yes
           - /ip service set api-ssl disabled=yes
-          - /ip service set ssh address="192.168.48.0/22,195.151.193.165/32,192.168.12.0/24,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24,10.193.63.0/24"
+          - /ip service set ssh address="192.168.48.0/22,195.151.193.165/32,192.168.12.0/24,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24,10.193.63.0/24,195.177.194.6/32"
           - /ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.168.60.0/24"
     - name: Disable SIP filtering
       routeros_command:
@@ -73,8 +74,8 @@
       routeros_command:
         commands:          
           - /ip dhcp-server option sets add name=set43 options=option43
-          - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"{{shopnet}}".".220")
-          - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set1 disabled=no interface=LAN name=dhcp1
+          - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"."{{shopnet}}".".220")
+          - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set43 disabled=no interface=LAN name=dhcp1
           - /ip dhcp-server network add address=("{{shopnet}}".".0/24") gateway=("{{shopnet}}".".254") dns-server=("{{shopnet}}".".254") dhcp-option=option43 dhcp-option-set=set43
     - name: Set VPN
       routeros_command:
