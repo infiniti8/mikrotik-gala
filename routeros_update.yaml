@@ -7,3 +7,4 @@
       routeros_command:
         commands:
           - /system package update set chanel=stable
+          - /system package update install
