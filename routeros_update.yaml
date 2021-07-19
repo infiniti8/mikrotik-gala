@@ -1,5 +1,5 @@
 - name: firewall
-  hosts: 192.167.170.254
+  hosts: BF
   gather_facts: false
   connection: network_cli
   tasks:
@@ -7,3 +7,4 @@
       routeros_command:
         commands:
           - /system package update set chanel=stable
+          - /
