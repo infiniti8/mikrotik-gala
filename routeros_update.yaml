@@ -1,4 +1,4 @@
-- name: firewall
+- name: update
   hosts: BF
   gather_facts: false
   connection: network_cli
