@@ -1,0 +1,9 @@
+- name: SNMP List config
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: set SNMP List
+      routeros_command:
+        commands:
+        - /interface list add address=10.193.63.21 list=SNMP_Monitor
