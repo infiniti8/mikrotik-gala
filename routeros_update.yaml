@@ -1,5 +1,5 @@
 - name: firewall
-  hosts: BF
+  hosts: 192.167.170.254
   gather_facts: false
   connection: network_cli
   tasks:
