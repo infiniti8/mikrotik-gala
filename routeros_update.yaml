@@ -9,6 +9,6 @@
     - name: check-version-routerboard
       routeros_command:
         commands: /system routerboard print
-      register: system_routerboard_print
+      register: system_rb_print
     - name: Print routerboard version hardvare
-      debug: var=system_print.stdout_lines[0][0]
+      debug: var=system_rb_print.stdout_lines[0][0]
