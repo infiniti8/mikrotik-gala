@@ -18,7 +18,11 @@
     - name: set update channel stable
       routeros_command:
         commands: /system package update set channel=stable
-      when: "'channel: stable' not in update_channel.stdout_lines[0][0]"
+      register: print_channel_set
+
+    - name: print_channel_set
+      debug: var=print_channel_set.stdout_lines[0][0]
+      when: "'syntax error (line 1 column 13)' in print_channel_set.stdout_lines[0][0]"
 
     - name: check-version-routerboard
       routeros_command:
