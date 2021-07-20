@@ -1,10 +1,16 @@
-- name: update
+- name: update router os Firmware and hardware
   hosts: BF
   gather_facts: false
   connection: network_cli
   tasks:
-    - name: check-for-updates
+    - name: START
+      debug:
+        msg: "-------START UPDATE PROCEDURE-------"
+    - name: check-version-routerboard
       routeros_command:
         commands:
-          - /system package update set chanel=stable
-          - /system package update install
+          - /system routerboard print
+        register: system_routerboard_print
+    - name: Print routerboard version hardvare
+      debug:
+        var: system_print.stdout_lines[0][0]
