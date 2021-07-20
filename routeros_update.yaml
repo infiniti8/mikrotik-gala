@@ -11,5 +11,4 @@
         commands: /system routerboard print
       register: system_routerboard_print
     - name: Print routerboard version hardvare
-      debug:
-        var: system_print.stdout_lines[0][1]
+      debug: var=system_print.stdout_lines[0][0]
