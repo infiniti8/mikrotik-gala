@@ -63,8 +63,8 @@
     - name: update firmware
       routeros_command:
         commands: /system package update install 
-      when: version not in system_firmware_print.stdout_lines[0][1]
       ignore_unreachable: yes
+      when: version not in system_firmware_print.stdout_lines[0][1]
 #Пауза ожидание перезагрузки микротика.
     - name: pause reboot
       pause:
@@ -89,8 +89,8 @@
     - name: update hardware
       routeros_command:
         commands: /system routerboard upgrade;:delay 60s;:execute {/system reboot;};
-      when: version not in system_hardware_print.stdout_lines[0][6]
       ignore_unreachable: yes
+      when: version not in system_hardware_print.stdout_lines[0][6]
 #Пауза ожидание перезагрузки микротика.
     - name: pause reboot
       pause:
