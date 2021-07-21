@@ -39,6 +39,6 @@
         commands: /system resource print
       register: system_firmware_print
 #Вывод номера версии прошивки FIRMWARE
-    - name: Print routerboard version
+    - name: Print firmware version
       debug: var=system_firmware_print.stdout_lines[0][1]
-      when: "'version' not in system_firmware_print.stdout_lines[0][1]"
+      when: "'{{version}}' not in system_firmware_print.stdout_lines[0][1]"
