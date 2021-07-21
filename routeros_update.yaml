@@ -3,7 +3,7 @@
   gather_facts: false
   connection: network_cli
   vars:
-    version: 6.48.3
+    version: "6.42.7"
 
   tasks:
     - name: START
