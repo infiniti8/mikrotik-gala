@@ -3,7 +3,7 @@
   gather_facts: false
   connection: network_cli
   vars:
-    version: 6.42.7
+    version: 6.48.3
 
   tasks:
     - name: START
@@ -39,6 +39,6 @@
         commands: /system resource print
       register: system_firmware_print
 #Вывод номера версии прошивки FIRMWARE
-    - name: Print routerboard version hardvare
+    - name: Print routerboard version
       debug: var=system_firmware_print.stdout_lines[0][1]
       when: "'version' not in system_firmware_print.stdout_lines[0][1]"
