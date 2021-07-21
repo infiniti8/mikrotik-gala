@@ -22,6 +22,7 @@
 
     - name: print_channel_set
       debug: var=print_channel_set.stdout[0]
+        msg: "Stable channel не найден"
       when: "'syntax error' in print_channel_set.stdout[0]"
 
     - name: check-version-routerboard
