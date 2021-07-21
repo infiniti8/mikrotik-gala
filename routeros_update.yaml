@@ -5,9 +5,9 @@
   tasks:
     - name: START
       debug:
-        msg: "-------START UPDATE PROCEDURE-------"
+        msg: "-------Старт процедуры обновления-------"
 
-    - name: Check update channel
+    - name: Проверка списка каналов обновления
       routeros_command:
         commands: /system package update print
       register: update_channel
