@@ -21,7 +21,7 @@
       register: print_channel_set
 
     - name: print_channel_set
-      debug: var=print_channel_set.stdout[0]
+      debug:
         msg: "Stable channel не найден"
       when: "'syntax error' in print_channel_set.stdout[0]"
 
