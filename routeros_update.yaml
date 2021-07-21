@@ -97,11 +97,11 @@
         minutes: 6
       when: version not in system_hardware_print.stdout_lines[0][6]
 #Вывод номера версии прошивки HARDWARE обновление произведено успешно
-    - name: Print firmware version update sucsefull
+    - name: Print hardware version update sucsefull
       debug: var=system_hardware_print.stdout_lines[0][6]
-      when: version in system_firmware_print.stdout_lines[0][6]
+      when: version in system_hardware_print.stdout_lines[0][6]
 #Вывод сообщения об ошибке Обновление прошивки не произведено
-    - name: Print firmware update version erorr
+    - name: Print hardware update version erorr
       debug:
         msg: "Update error"
       when: version not in system_hardware_print.stdout_lines[0][6]
