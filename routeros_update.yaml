@@ -21,8 +21,8 @@
       register: print_channel_set
 
     - name: print_channel_set
-      debug: var=print_channel_set.stdout_lines[0][0]
-      when: "'syntax error (line 1 column 13)' in print_channel_set.stdout_lines[0][0]"
+      debug: var=print_channel_set.stdout[0]
+      when: "'syntax error' in print_channel_set.stdout[0]"
 
     - name: check-version-routerboard
       routeros_command:
