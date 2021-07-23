@@ -44,7 +44,7 @@
     - name: print channel set
       debug:
         msg: "Stable channel not faund"
-      when: 'syntax error' in print_channel_set.stdout[0]
+      when: "'syntax error' in print_channel_set"
 #Установка канала обновления на current с проверкой условия если Stable не обнаружен в списке.
     - name: set update channel current if stable not faund
       routeros_command:
