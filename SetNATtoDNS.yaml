@@ -1,0 +1,9 @@
+- name: firewall NAT to DNS
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: set NAT rules
+      routeros_command:
+        commands:
+          - /ip firewall nat set [ find to-addresses=192.168.49.1 ] to-addresses=10.193.48.48
