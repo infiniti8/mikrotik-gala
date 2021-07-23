@@ -39,7 +39,6 @@
       routeros_command:
         commands: /system package update set channel=stable
       register: print_channel_set
-      when: "'channel: stable' not in update_channel.stdout_lines[0][0]"
 #Вывод сообщения об ошибке установки канала если Stable отсутсвует в списке
     - name: print channel set
       debug:
