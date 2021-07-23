@@ -52,7 +52,7 @@
 #Обновление FIRMWARE прошивки
     - name: update firmware
       routeros_command:
-        commands: /system package update install 
+        commands: /execute {/system package update install;}
       ignore_unreachable: yes
       when: version not in system_firmware_print_before.stdout_lines[0][1]
 #Пауза ожидание перезагрузки микротика.
