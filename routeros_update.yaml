@@ -78,7 +78,7 @@
 #Обновление HARDWARE прошивки
     - name: update hardware
       routeros_command:
-        commands: /system routerboard upgrade
+        commands: /execute {/system routerboard upgrade;}
       ignore_unreachable: yes
       when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Пауза ожидание перезагрузки микротика.
