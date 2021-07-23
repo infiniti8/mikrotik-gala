@@ -78,13 +78,25 @@
 #Обновление HARDWARE прошивки
     - name: update hardware
       routeros_command:
-        commands: /system routerboard upgrade;:delay 60s;:execute {/system reboot;};
+        commands: /system routerboard upgrade execute {/system reboot;};
       ignore_unreachable: yes
       when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Пауза ожидание перезагрузки микротика.
     - name: pause reboot
       pause:
-        minutes: 6
+        minutes: 1
+      ignore_unreachable: yes
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
+#Обновление HARDWARE прошивки
+    - name: update hardware
+      routeros_command:
+        commands: /execute {/system reboot;}
+      ignore_unreachable: yes
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
+#Пауза ожидание перезагрузки микротика.
+    - name: pause reboot
+      pause:
+        minutes: 4
       ignore_unreachable: yes
       when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Проверка версии прошивки HARDWARE после обновления и запись значения в переменную system_hardware_print_after
