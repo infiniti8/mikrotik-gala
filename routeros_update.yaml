@@ -25,7 +25,7 @@
       register: system_hardware_print_before
 #Вывод номера версии прошивки HARDWARE
     - name: Print HARDWARE version
-      debug: var=system_hardware_print_before.stdout_lines[0][7]
+      debug: var=system_hardware_print_before.stdout_lines[0][6]
 #Проверка установленного канала обновления, записывает вывод в переменную update_channel
     - name: Check update channel
       routeros_command:
@@ -40,7 +40,7 @@
         commands: /system package update set channel=stable
       register: print_channel_set
 #Вывод сообщения об ошибке установки канала если Stable отсутсвует в списке
-    - name: print channel set
+    - name: print channel set stable not faund
       debug:
         msg: "Stable channel not faund"
       when: "'syntax error' in print_channel_set"
@@ -58,7 +58,7 @@
 #Пауза ожидание перезагрузки микротика.
     - name: pause reboot
       pause:
-        minutes: 6
+        minutes: 4
       ignore_unreachable: yes
       when: version not in system_firmware_print_before.stdout_lines[0][1]
 #Проверка версии прошивки FIRMWARE после обновления и запись значения в переменную system_firmware_print_after
@@ -80,25 +80,25 @@
       routeros_command:
         commands: /execute {/system routerboard upgrade;}
       ignore_unreachable: yes
-      when: version not in system_hardware_print_before.stdout_lines[0][7]
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Пауза ожидание апгрейда микротика.
     - name: pause before reboot
       pause:
         minutes: 1
       ignore_unreachable: yes
-      when: version not in system_hardware_print_before.stdout_lines[0][7]
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
 # Перезагрузка после апгрейда
     - name: reboot after upgrade
       routeros_command:
         commands: /execute {/system reboot;}
       ignore_unreachable: yes
-      when: version not in system_hardware_print_before.stdout_lines[0][7]
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Пауза ожидание перезагрузки микротика.
     - name: pause after reboot
       pause:
-        minutes: 3
+        minutes: 2
       ignore_unreachable: yes
-      when: version not in system_hardware_print_before.stdout_lines[0][7]
+      when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Проверка версии прошивки HARDWARE после обновления и запись значения в переменную system_hardware_print_after
     - name: Check version hardware after update
       routeros_command:
@@ -106,10 +106,10 @@
       register: system_hardware_print_after
 #Вывод номера версии прошивки HARDWARE обновление произведено успешно
     - name: Print hardware version update sucsefull
-      debug: var=system_hardware_print_after.stdout_lines[0][7]
-      when: version in system_hardware_print_after.stdout_lines[0][7]
+      debug: var=system_hardware_print_after.stdout_lines[0][6]
+      when: version in system_hardware_print_after.stdout_lines[0][6]
 #Вывод сообщения об ошибке Обновление прошивки не произведено
     - name: Print hardware update version erorr
       debug:
         msg: "Update error"
-      when: version not in system_hardware_print_after.stdout_lines[0][7]
+      when: version not in system_hardware_print_after.stdout_lines[0][6]
