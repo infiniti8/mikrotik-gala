@@ -68,7 +68,7 @@
       register: system_firmware_print_after
 #Вывод номера версии прошивки FIRMWARE обновление произведено успешно
     - name: Print firmware version update sucsefull
-      debug: var=system_firmware_print.stdout_lines[0][1]
+      debug: var=system_firmware_print_after.stdout_lines[0][1]
       when: version in system_firmware_print_after.stdout_lines[0][1]
 #Вывод сообщения об ошибке Обновление прошивки не произведено
     - name: Print firmware update version erorr
@@ -78,7 +78,7 @@
 #Обновление HARDWARE прошивки
     - name: update hardware
       routeros_command:
-        commands: /system routerboard upgrade execute {/system reboot;};
+        commands: /system routerboard upgrade
       ignore_unreachable: yes
       when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Пауза ожидание перезагрузки микротика.
@@ -96,7 +96,7 @@
 #Пауза ожидание перезагрузки микротика.
     - name: pause reboot
       pause:
-        minutes: 4
+        minutes: 3
       ignore_unreachable: yes
       when: version not in system_hardware_print_before.stdout_lines[0][6]
 #Проверка версии прошивки HARDWARE после обновления и запись значения в переменную system_hardware_print_after
