@@ -1,0 +1,12 @@
+- name: firewall Connection Get
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: Get Connection
+      routeros_command:
+        commands:
+          - /ip firewall connection print where src-address ~ ":1701"
+        register: MikConn
+    - name: Print firmware version
+      debug: var=MikConn.stdout_lines[2][3]
