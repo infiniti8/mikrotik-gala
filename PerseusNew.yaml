@@ -6,4 +6,4 @@
     - name: SetNewPerseus
       routeros_command:
         commands:
-        - /ip firewall address-list add address=195.177.195.29 list=Perseus
+        - :if ([/ip firewall address-list get [find list="Perseus" address="194.84.176.82"] list]="Perseus") do={/ip firewall address-list add address=195.177.195.29 list=Perseus}
