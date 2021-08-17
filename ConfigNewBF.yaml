@@ -90,7 +90,7 @@
     - name: Set DNS adresses
       routeros_command:
         commands:
-          - /ip dns set allow-remote-requests=yes servers=192.168.49.1,192.168.12.7
+          - /ip dns set allow-remote-requests=yes servers=10.193.48.48,10.192.51.41
     - name: Set DHCP options
       routeros_command:
         commands:
@@ -107,10 +107,10 @@
           - /ip dhcp-server add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=yes
           - /ip dhcp-server add address-pool=pool-30 interface=VLAN30 lease-time=1h name=dhcp-server-30 disabled=no
           - /ip dhcp-server add address-pool=pool-40 interface=VLAN40 lease-time=24h name=dhcp-server-40 disabled=no
-          - /ip dhcp-server network add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=192.168.49.1,192.168.12.7 
-          - /ip dhcp-server network add address=("{{shopnet}}".".64/26") gateway=("{{shopnet}}".".126") dns-server=192.168.49.1,192.168.12.7  dhcp-option=option43 dhcp-option-set=set43
+          - /ip dhcp-server network add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=10.193.48.48,10.192.51.41 
+          - /ip dhcp-server network add address=("{{shopnet}}".".64/26") gateway=("{{shopnet}}".".126") dns-server=10.193.48.48,10.192.51.41  dhcp-option=option43 dhcp-option-set=set43
           - /ip dhcp-server network add address=("{{shopnet}}".".128/26") gateway=("{{shopnet}}".".190") dns-server=77.88.8.88,77.88.8.2
-          - /ip dhcp-server network add address=("{{shopnet}}".".192/26") gateway=("{{shopnet}}".".254") dns-server=192.168.49.1,192.168.12.7
+          - /ip dhcp-server network add address=("{{shopnet}}".".192/26") gateway=("{{shopnet}}".".254") dns-server=10.193.48.48,10.192.51.41
     - name: Set VPN
       routeros_command:
         commands:
