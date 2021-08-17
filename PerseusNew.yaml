@@ -1,0 +1,9 @@
+- name: PerseusNew
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: SetNewPerseus
+      routeros_command:
+        commands:
+        - /ip firewall address-list add address=195.177.195.29 list=Perseus
