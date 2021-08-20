@@ -1,5 +1,5 @@
 - name: New DNS
-  hosts: GALA_MikroTik_OFC
+  hosts: GALA_MikroTik_Office
   gather_facts: false
   connection: network_cli
   vars:
