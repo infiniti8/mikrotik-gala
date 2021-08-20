@@ -1,5 +1,5 @@
 - name: DHCP server new DNS
-  hosts: GALA_MikroTik_MPR
+  hosts: GALA_MikroTik_OFC
   gather_facts: false
   connection: network_cli
   vars:
