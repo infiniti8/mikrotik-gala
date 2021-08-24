@@ -20,6 +20,6 @@
       register: collected_files
       run_once: true
     - name: del old zip
-      local_action: file path="/var/lib/awx/projects/backup/" state=absent
+      local_action: file path="{{ item.path }}" state=absent
       with_items: {{ collected_files.files }}
       run_once: true
