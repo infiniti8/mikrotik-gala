@@ -5,7 +5,6 @@
   vars:
     ansible_command_timeout: 180
     backup_file: "{{ ansible_ssh_host }}.backup"
-    zip_file: "FRN_{{ ansible_date_time.date }}.zip"
   tasks:
     - name: export config
       routeros_facts:
@@ -13,7 +12,7 @@
     - name: save output
       local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/FRN/{{ backup_file }}
     - name: zip catalog
-      local_action: archive path=/var/lib/awx/projects/mikrotik/FRN dest=/var/lib/awx/projects/backup/{{ zip_file }} format=zip
+      local_action: archive path=/var/lib/awx/projects/mikrotik/FRN dest=/var/lib/awx/projects/backup/FRN_{{lookup('pipe','date \"+%Y-%m-%d\"')}}.zip format=zip
       run_once: true
     - name: find old zip
       local_action: find paths=/var/lib/awx/projects/backup/ age=8w patterns="FRN_*.zip"
