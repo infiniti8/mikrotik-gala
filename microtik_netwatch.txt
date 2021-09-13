@@ -1,6 +1,0 @@
-/tool netwatch
-add comment=Google down-script=":local chgoogleip [/ping 195.177.194.8 interface=ether1-ISP1 count=5]\r\
-    \n:local chyandexip [/ping 77.88.8.8 interface=ether1-ISP1 count=5]\r\
-    \n:local chdcip [/ping 195.151.158.181 interface=ether1-ISP1 count=5]\r\
-    \n:if (chgoogleip = 0 and chyandexip=0 and chdcip=0) do={\r\
-    \n/ip route set [find comment=\"ISP1\"] disabled=yes }" host=195.177.194.8 interval=20s up-script="/ip route set [find comment=\"ISP1\"] disabled=no"

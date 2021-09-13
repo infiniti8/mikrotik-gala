@@ -1,0 +1,16 @@
+- name: Change netwatch new
+  hosts: BF
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: START
+      debug:
+        msg: "-------START netwatch change Procedure-------"
+#удаление старх правил netwatch
+    - name: remove old netwatch rules
+      routeros_command:
+        commands: /tool netwatch remove [find]
+#Добавление новых правил netwatch
+    - name: add new netwatch rules
+      routeros_command:
+        commands: /tool netwatch add comment=Google down-script=":local choneip [/ping 195.177.194.1 interface=ether1-ISP1 count=5]\r\ \n:local chyandexip [/ping 77.88.8.8 interface=ether1-ISP1 count=5]\r\ \n:local chtwoip [/ping 195.162.6.1 interface=ether1-ISP1 count=5]\r\ \n:if (choneip = 0 and chyandexip=0 and chtwoip=0) do={\r\ \n/ip route set [find comment=\"ISP1\"] disabled=yes }" host=195.177.194.8 interval=20s up-script="/ip route set [find comment=\"ISP1\"] disabled=no"
