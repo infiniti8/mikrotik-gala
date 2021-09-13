@@ -94,12 +94,12 @@
           - /ip firewall layer7-protocol add name=apps.skype.com regexp=apps.skype.com
           - /ip firewall layer7-protocol add name=download.skype.com regexp=download.skype.com
           - /ip firewall layer7-protocol add name=galacentre.ru regexp=galacentre.ru
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galamart.ru-fwd to-addresses=192.168.49.1
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=cs22.wpc.v0cdn.net-fwd to-addresses=192.168.49.1
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=apps.skype.com-fwd to-addresses=192.168.49.1
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.skype.com-fwd to-addresses=192.168.49.1
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galacentre.ru-fwd to-addresses=192.168.49.1
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=myway.local-fwd to-addresses=192.168.49.1
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galamart.ru-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=cs22.wpc.v0cdn.net-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=apps.skype.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.skype.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galacentre.ru-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=myway.local-fwd to-addresses=10.193.48.48
 
     - name: Set firewall address-list
       routeros_command:

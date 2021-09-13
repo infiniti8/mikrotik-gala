@@ -11,3 +11,14 @@
         gather_subset: config
     - name: save output
       local_action: copy content={{ ansible_net_config }} dest=/var/lib/awx/projects/mikrotik/OFC/{{ backup_file }}
+    - name: zip catalog
+      local_action: archive path=/var/lib/awx/projects/mikrotik/OFC dest=/var/lib/awx/projects/backup/OFC_{{lookup('pipe','date \"+%Y-%m-%d\"')}}.zip format=zip
+      run_once: true
+    - name: find old zip
+      local_action: find paths=/var/lib/awx/projects/backup/ age=8w patterns="OFC_*.zip"
+      register: collected_files
+      run_once: true
+    - name: del old zip
+      local_action: file path="{{ item.path }}" state=absent
+      with_items: "{{ collected_files.files }}"
+      run_once: true

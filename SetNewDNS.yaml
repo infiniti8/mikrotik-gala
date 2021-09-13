@@ -1,0 +1,12 @@
+- name: New DNS
+  hosts: GALA_Mikrotik_Office
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: Change DNS client
+      routeros_command:
+        commands:
+          - :if ([/ip dns get servers]~"192\\.168\\.49\\.1") do={/ip dns set servers=10.193.48.48,10.192.51.41}
+          - :if ([/ip dns get servers]~"192\\.168\\.12\\.7") do={/ip dns set servers=10.193.48.48,10.192.51.41}

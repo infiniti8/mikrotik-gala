@@ -1,0 +1,11 @@
+- name: PerseusNew
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: SetNewPerseus
+      routeros_command:
+        commands:
+        - :if ([/ip firewall address-list get [find list="Perseus" address="194.84.176.82"] list]="Perseus") do={/ip firewall address-list add address=195.177.195.29 list=Perseus}
