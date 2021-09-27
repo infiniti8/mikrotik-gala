@@ -1,0 +1,12 @@
+- name: Remove Naming Connections
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: Remove Wrong Connections
+      routeros_command:
+        commands:
+          - /ip firewall connection remove [find protocol=udp connection-mark=in-c_isp1]
+          - /ip firewall connection remove [find protocol=udp connection-mark=in-c_isp2]

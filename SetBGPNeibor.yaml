@@ -5,12 +5,7 @@
   vars:
     ansible_command_timeout: 180
   tasks:
-    - name: Remove OLD Neibors
+    - name: Change MS Neibors 
       routeros_command:
         commands:
-          - /routing bgp peer remove [find remote-address=10.199.240.1] 
-          - /routing bgp peer remove [find remote-address=10.198.240.1]
-    - name: Change Keepalive MS Neibors 
-      routeros_command:
-        commands:
-          - /routing bgp peer set [find remote-address=10.192.240.1] keepalive-time=30s
+          - /routing bgp peer set [find remote-address=10.192.240.1] keepalive-time=30s hold-time=180s ttl=1
