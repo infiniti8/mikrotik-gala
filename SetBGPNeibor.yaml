@@ -1,0 +1,11 @@
+- name: Change BGP Neibors
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: Change MS Neibors 
+      routeros_command:
+        commands:
+          - /routing bgp peer set [find remote-address=10.192.240.1] keepalive-time=30s hold-time=180s ttl=1

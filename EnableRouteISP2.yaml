@@ -1,0 +1,11 @@
+- name: Enable Route ISP2
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: Enable Route
+      routeros_command:
+        commands:
+          - /ip route set [find comment=ISP2 disabled=yes] disabled=no distance=100
