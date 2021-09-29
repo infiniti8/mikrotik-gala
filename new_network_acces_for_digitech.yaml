@@ -1,0 +1,14 @@
+- name: add new network acces from digitech
+  hosts: BF
+  gather_facts: false
+  connection: network_cli
+    tasks:
+      - name: add adress to list InetAdmin
+        routeros_command:
+          commands: /ip firewall address-list add address=10.24.11.40 list=InetAdmin comment=digitech
+      - name: add adress to list Admin
+        routeros_command:
+          commands: /ip firewall address-list add address=10.24.11.40 list=Admin comment=digitech
+      - name: add address to ip service
+        routeros_command:
+          commands: /ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.44.0/24,192.168.0.0/24,192.168.2.0/24,192.168.3.0/24,192.168.4.0/24,192.168.43.0/24,162.1\68.60.0/24,10.24.11.40"
