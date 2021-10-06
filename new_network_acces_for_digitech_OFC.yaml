@@ -1,0 +1,15 @@
+- name: add new network acces from digitech
+  hosts: GALA_MikroTik_OFC
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: add adress to list InetAdmin
+      routeros_command:
+        commands: 
+          - :if ([/ip firewall filter get [find action=accept chain=input src-address-list="InetAdmin"]]) do={/ip firewall address-list add address=194.190.106.86 list=InetAdmin}
+    - name: add address to ip service
+      routeros_command:
+        commands: 
+          - :if ([/ip service get winbox address]~"192\\.168\\.48\\.0") do={/ip service set winbox address="192.168.48.0/22,195.151.193.165/32,192.168.2.0/24,10.24.11.40/32,194.190.106.86/32"}
