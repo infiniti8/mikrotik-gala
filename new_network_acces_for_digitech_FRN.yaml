@@ -7,8 +7,6 @@
         routeros_command:
           commands: 
             - :if ([/ip firewall filter get [find action=accept chain=input src-address-list="InetAdmin"]]) do={/ip firewall address-list add address=194.190.106.86 list=InetAdmin}
-      - name: add adress to list Admin
-        routeros_command:
       - name: add address to ip service
         routeros_command:
           commands: 
