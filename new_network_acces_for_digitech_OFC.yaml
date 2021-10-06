@@ -1,5 +1,5 @@
 - name: add new network acces from digitech
-  hosts: GALA_MikroTik_OFC
+  hosts: GALA_Mikrotik_Office
   gather_facts: false
   connection: network_cli
   vars:
