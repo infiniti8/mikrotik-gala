@@ -11,11 +11,11 @@
         routeros_command:
           commands: 
             - :if ([/ip firewall filter get [find action=accept chain=input] src-address-list]="Admin") do={/ip firewall address-list add address=10.24.11.40 list=Admin comment=digitech}
-            - /ip firewall address-list remove [find address=192.168.51.116]
-            - /ip firewall address-list remove [find address=home.papa-admin.ru]
-            - /ip firewall address-list remove [find address=192.168.255.0/24]
-            - /ip firewall address-list remove [find address=192.168.12.218]
-            - /ip firewall address-list remove [find address=192.168.2.75]
+            - /ip firewall address-list remove [find list=Admin address=192.168.51.116]
+            - /ip firewall address-list remove [find list=Admin address=home.papa-admin.ru]
+            - /ip firewall address-list remove [find list=Admin address=192.168.255.0/24]
+            - /ip firewall address-list remove [find list=Admin address=192.168.12.218]
+            - /ip firewall address-list remove [find list=Admin address=192.168.2.75]
       - name: add address to ip service
         routeros_command:
           commands: 
