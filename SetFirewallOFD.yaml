@@ -8,4 +8,4 @@
     - name: Change rule
       routeros_command:
         commands:
-          - / ip firewall filter set [find comment=OFD] dst-port=21101,21102,7777,7778,5000,4000
+          - /ip firewall filter set [find comment=OFD] dst-port=21101,21102,7777,7778,5000,4000
