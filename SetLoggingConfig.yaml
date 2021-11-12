@@ -1,0 +1,12 @@
+- name: Config Logging
+  hosts: GALA_Mikrotik_Office
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: Remove SIEM2
+      routeros_command:
+        commands:
+          - /system logging remove [find action=SIEM2]
+          - /system logging action remove [find name=SIEM2]
