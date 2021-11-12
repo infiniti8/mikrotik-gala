@@ -1,5 +1,5 @@
 - name: Config Logging
-  hosts: GALA_Mikrotik_COD
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
   vars:
