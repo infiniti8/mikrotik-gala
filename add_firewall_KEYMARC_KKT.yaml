@@ -6,5 +6,5 @@
     - name: Addreslist_FIREWALL
       routeros_command:
         commands:
-        - /ip firewall address-list add address=prod01.okp-fn.ru list=KEYMARC_KKT
+        - /ip firewall address-list add address=31.44.83.184 list=KEYMARC_KKT
         - /ip firewall filter add action=accept chain=forward comment=KEYMARC_KKT dst-address-list=KEYMARC_KKT out-interface-list=WAN place-before=[/ip firewall filter find chain=forward comment="VTBnew"]
