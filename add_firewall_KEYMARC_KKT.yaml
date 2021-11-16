@@ -3,7 +3,7 @@
   gather_facts: false
   connection: network_cli
   tasks:
-    - name: Addreslist_FIREWALL_test
+    - name: Addreslist_FIREWALL
       routeros_command:
         commands:
         - /ip firewall address-list add address=prod01.okp-fn.ru list=KEYMARC_KKT
