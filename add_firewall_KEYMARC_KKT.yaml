@@ -2,9 +2,11 @@
   hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
+  vars:
+    ansible_command_timeout: 180
   tasks:
     - name: Addreslist_FIREWALL
       routeros_command:
         commands:
-        - /ip firewall address-list add address=31.44.83.184 list=KEYMARC_KKT
-        - /ip firewall filter add action=accept chain=forward comment=KEYMARC_KKT dst-address-list=KEYMARC_KKT out-interface-list=WAN place-before=[/ip firewall filter find chain=forward comment="VTBnew"]
+          - /ip firewall address-list add address=31.44.83.184 list=KEYMARC_KKT
+          - /ip firewall filter add action=accept chain=forward comment=KEYMARC_KKT dst-address-list=KEYMARC_KKT out-interface-list=WAN place-before=[/ip firewall filter find chain=forward comment="VTBnew"]
