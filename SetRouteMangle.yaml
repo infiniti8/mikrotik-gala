@@ -15,8 +15,6 @@
         commands:
           - :if ([/ip route find dst-address="195.162.6.9/32"]) do={:put "yes"} else={:put "no"}
       register: isp2_present
-    - set_fact: 
-        isp2={{ isp2_present.stdout }}      
     - name: Add mangle
       routeros_command:
         commands:
@@ -24,10 +22,10 @@
           - :if ([/ip firewall mangle find connection-mark="in-c_isp1"]) do={} else={/ip firewall mangle add action=mark-routing chain=output new-routing-mark=r_isp1 passthrough=no connection-mark=in-c_isp1}
           - :if ([/ip firewall mangle find new-connection-mark="in-c_isp2"]) do={} else={/ip firewall mangle add action=mark-connection chain=input new-connection-mark=in-c_isp2 in-interface=ether2-ISP2 protocol=!udp}
           - :if ([/ip firewall mangle find connection-mark="in-c_isp2"]) do={} else={/ip firewall mangle add action=mark-routing chain=output new-routing-mark=r_isp2 passthrough=no connection-mark=in-c_isp2}
-      when: isp2 == "yes"
+      when: isp2_present.stdout is search("yes")
     - name: Add routes
       routeros_command:
         commands:
           - :if ([/ip route find routing-mark="r_isp1"]) do={} else={/ip route add distance=1 gateway=([/ip route get [find dst-address="195.177.194.8/32"] gateway]) routing-mark=r_isp1}
           - :if ([/ip route find routing-mark="r_isp2"]) do={} else={/ip route add distance=1 gateway=([/ip route get [find dst-address="195.162.6.9/32"] gateway]) routing-mark=r_isp2}
-      when: isp2 == "yes"
+      when: isp2_present.stdout is search("yes")
