@@ -13,7 +13,7 @@
     - name: Get ISP2 Present
       routeros_command:
         commands:
-          - :if ([/ip route find dst-address="195.162.6.9/32"]) do={:put "yes"}
+          - :if ([/ip route find dst-address="195.162.6.9/32"]) do={:put "yes"} else={:put "no"}
       register: isp2_present  
     - name: Add mangle
       routeros_command:
