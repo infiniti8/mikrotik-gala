@@ -1,1 +1,0 @@
-/ip dhcp-server network> set dns-server=195.177.194.1,195.162.6.1 numbers=2
