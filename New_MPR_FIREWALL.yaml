@@ -24,6 +24,6 @@
       register: filter_print
 #test 
 - name: FILTERS PRINT
-      debug: var=filter_print.stdout
-      msg: "ruls deleted"
+      debug:
+        msg: "ruls deleted"
       when: "'Flags: X - disabled, I - invalid, D - dynamic' in filter_print.stdout"
