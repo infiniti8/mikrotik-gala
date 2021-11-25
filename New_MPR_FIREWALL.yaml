@@ -1,5 +1,5 @@
 - name: new_mpr_firewall
-  hosts: GALA_MikroTik_MPR
+  hosts: 192.168.48.89
   gather_facts: false
   connection: network_cli
   vars:
