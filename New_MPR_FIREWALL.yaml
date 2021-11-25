@@ -36,4 +36,4 @@
     - name: addreslist print
       debug: var=addlist_print.stdout
         #msg: "filter rules  deleted"
-#when: "'Flags: X - disabled, D - dynamic' in addlist_print.stdout"
+      when: "'Flags: X - disabled, D - dynamic' in addlist_print.stdout_line[0]"
