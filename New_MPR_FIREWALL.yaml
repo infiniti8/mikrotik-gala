@@ -25,5 +25,5 @@
 #test 
     - name: filter print
       debug:
-      msg: "ruls deleted"
+        msg: "filter rules  deleted"
       when: "'Flags: X - disabled, I - invalid, D - dynamic' in filter_print.stdout"
