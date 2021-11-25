@@ -1,0 +1,28 @@
+- name: new_mpr_firewall
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 180
+  tasks:
+    - name: START
+      debug:
+        msg: "-------START Change ruls new firewall Procedure-------"
+#Удаление старых правил firewal
+    - name: Delete_ruls_old_firewall
+      routeros_command:
+        commands: /ip firewall filter remove [find]
+#Пауза ожидание отработки команды удаление старых правил фаервола.
+    - name: pause before next task
+      pause:
+        minutes: 1
+#Удаление старых правил firewal
+    - name: print list ruls
+      routeros_command:
+        commands: /ip firewall filter print
+      register: filter_print
+#test 
+- name: START
+      debug: var=filter_print.stdout
+      msg: "ruls deleted"
+      when: "'Flags: X - disabled, I - invalid, D - dynamic' in filter_print.stdout"
