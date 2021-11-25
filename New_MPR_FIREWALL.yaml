@@ -3,7 +3,7 @@
   gather_facts: false
   connection: network_cli
   vars:
-    ansible_command_timeout: 180
+    ansible_command_timeout: 60
 
   tasks:
     - name: START
@@ -13,10 +13,6 @@
     - name: Delete_ruls_old_firewall
       routeros_command:
         commands: /ip firewall filter remove [find]
-#Пауза ожидание отработки команды удаление старых правил фаервола.
-    - name: pause before next task
-      pause:
-        minutes: 1
 #Удаление старых правил firewal
     - name: print list ruls
       routeros_command:
