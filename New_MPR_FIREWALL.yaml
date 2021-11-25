@@ -13,7 +13,7 @@
     - name: Delete_ruls_old_firewall
       routeros_command:
         commands: /ip firewall filter remove [find]
-#Удаление старых правил firewal
+#Запись в переменную вывода списков правил
     - name: print list ruls
       routeros_command:
         commands: /ip firewall filter print
@@ -23,3 +23,17 @@
       debug:
         msg: "filter rules  deleted"
       when: "'Flags: X - disabled, I - invalid, D - dynamic' in filter_print.stdout"
+#Удаление старых списков адресов
+    - name: Delete_address_list_old_firewall
+      routeros_command:
+        commands: /ip firewall address-list remove [find]
+#Запись в переменную вывода списков адресов
+    - name: print lists addreses
+      routeros_command:
+        commands: /ip firewall address-list print
+      register: addlist_print
+#Отладка проверка что все списки адресов удалены 
+    - name: addreslist print
+      debug:
+        msg: "filter rules  deleted"
+      when: "'Flags: X - disabled, D - dynamic' in addlist_print.stdout"
