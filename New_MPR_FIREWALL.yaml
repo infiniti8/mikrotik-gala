@@ -18,7 +18,7 @@
       routeros_command:
         commands: /ip firewall filter print
       register: filter_print
-#test 
+#Отладка проверка что все правила фильтров удалены 
     - name: filter print
       debug:
         msg: "filter rules  deleted"
