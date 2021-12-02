@@ -1,0 +1,39 @@
+- name: new_mpr_firewall
+  hosts: BF
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_command_timeout: 60
+
+  tasks:
+    - name: START
+      debug:
+        msg: "-------START Change ruls new firewall Procedure-------"
+#Удаление старых правил firewal
+    - name: Delete_ruls_old_firewall
+      routeros_command:
+        commands: /ip firewall filter remove [find]
+#Запись в переменную вывода списков правил
+    - name: print list ruls
+      routeros_command:
+        commands: /ip firewall filter print
+      register: filter_print
+#Отладка проверка что все правила фильтров удалены 
+    - name: filter print
+      debug:
+        msg: "filter rules  deleted"
+      when: "'Flags: X - disabled, I - invalid, D - dynamic' in filter_print.stdout"
+#Удаление старых списков адресов
+    - name: Delete_address_list_old_firewall
+      routeros_command:
+        commands: /ip firewall address-list remove [find]
+#Запись в переменную вывода списков адресов
+    - name: print lists addreses
+      routeros_command:
+        commands: /ip firewall address-list print
+      register: addlist_print
+#Отладка проверка что все списки адресов удалены 
+    - name: addreslist print
+      debug: var=addlist_print.stdout
+        #msg: "filter rules  deleted"
+      when: "'Flags: X - disabled, D - dynamic' in addlist_print.stdout[0]"
