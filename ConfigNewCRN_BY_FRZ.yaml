@@ -1,4 +1,4 @@
-- name: New CRN BY
+- name: New CRN BY FRZ
   hosts: newshop
   gather_facts: false
   connection: network_cli
@@ -46,6 +46,19 @@
           - /interface list member add interface=MPR_EK list=VPN
           - /interface list member add interface=MPR_MS list=VPN
           - /interface list member add interface=bridge list=LAN
+        when: shopname == "CRN"
+    - name: Set interface list
+      routeros_command:
+        commands:
+          - /interface list add name=WAN
+          - /interface list add name=LAN
+          - /interface list add name=VPN
+          - /interface list member add interface=ether1-ISP1 list=WAN
+          - /interface list member add interface=ether2-ISP2 list=WAN
+          - /interface list member add interface=MPR_EK list=VPN
+          - /interface list member add interface=MPR_MS list=VPN
+          - /interface list member add interface=bridge list=LAN
+        when: shopname == "FRZ"
     - name: Set service
       routeros_command:
         commands:
@@ -62,11 +75,13 @@
       routeros_command:
         commands:
           - /ip proxy set anonymous=yes cache-path=web-proxy1 enabled=yes parent-proxy=0.0.0.0 port=3128
-    - name: Set SNMP community
+    - name: Set SNMP community and logging
       routeros_command:
         commands:
           - /snmp set enabled=yes location=("{{shopname}}"."_"."{{shopcode}}")
           - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
+          - /system logging action set 1 disk-file-name=log
+          - /system logging action set 3 remote=10.193.63.7 src-address=("{{shopnet}}".".254)
     - name: Set over settings
       routeros_command:
         commands:
