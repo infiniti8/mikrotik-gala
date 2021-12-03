@@ -40,25 +40,16 @@
           - /interface list add name=WAN
           - /interface list add name=LAN
           - /interface list add name=VPN
-          - /interface list member add interface=lte1 list=WAN
           - /interface list member add interface=ether1-ISP1 list=WAN
           - /interface list member add interface=ether2-ISP2 list=WAN
           - /interface list member add interface=MPR_EK list=VPN
           - /interface list member add interface=MPR_MS list=VPN
           - /interface list member add interface=bridge list=LAN
-        when: shopname == "CRN"
-    - name: Set interface list
+    - name: Set interface list for CRN with lte interface
       routeros_command:
         commands:
-          - /interface list add name=WAN
-          - /interface list add name=LAN
-          - /interface list add name=VPN
-          - /interface list member add interface=ether1-ISP1 list=WAN
-          - /interface list member add interface=ether2-ISP2 list=WAN
-          - /interface list member add interface=MPR_EK list=VPN
-          - /interface list member add interface=MPR_MS list=VPN
-          - /interface list member add interface=bridge list=LAN
-        when: shopname == "FRZ"
+          - /interface list member add interface=lte1 list=WAN
+        when: shopname == "CRN"
     - name: Set service
       routeros_command:
         commands:
@@ -167,10 +158,20 @@
           - /routing bgp instance set default as=65000 router-id=("{{shopnet}}".".254")
           - /routing filter add action=accept chain=bgp-out prefix=("{{shopnet}}".".0/24")
           - /routing filter add action=discard chain=bgp-out
-          - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
-          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
+    - name: Set BGP peer for CRN
+      routeros_command:
+        commands:
+          - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+        when: shopname == "CRN"
+    - name: Set BGP peer for FRZ
+      routeros_command:
+        commands:
+          - /routing bgp peer add name=MPR_EK remote-address=10.193.244.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+          - /routing bgp peer add name=MPR_MS remote-address=10.192.244.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+        when: shopname == "FRZ"
     - name: Set shop name
       routeros_command:
         commands:
