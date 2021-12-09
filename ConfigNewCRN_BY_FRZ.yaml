@@ -124,6 +124,8 @@
           - /ip firewall address-list add address=10.193.63.21 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
           - /ip firewall address-list add address=192.168.12.53 list=SNMP_Monitor comment="Zabbix Telecom Gagarin"
           - /ip firewall address-list add address=10.192.63.3 list=SNMP_Monitor comment="Zabbix Telecom Dataspace"
+          - /ip firewall address-list add address=("{{shopnet}}".".1") list=Internet
+          - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
           - /ip firewall address-list add address=192.168.0.0/16 list=Proxy
     - name: Set firewall filter input
