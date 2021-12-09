@@ -32,7 +32,7 @@
       routeros_command:
         commands:
           - /interface wireless set [ find default-name=wlan1 ] antenna-gain=4 band=2ghz-b/g/n channel-width=20/40mhz-Ce disabled=no frequency=auto installation=indoor mode=ap-bridge ssid=MPRTSD
-          - /interface wireless set [ find default-name=wlan2 ] ssid=MikroTik
+          - /interface wireless set [ find default-name=wlan2 ] band=5ghz-a/n/ac channel-width=20/40/80mhz-Ceee disabled=no frequency=auto installation=indoor mode=ap-bridge ssid=MPRTSD_5GHz
           - /interface wireless security-profiles set [ find default=yes ] authentication-types=wpa2-psk eap-methods="" mode=dynamic-keys supplicant-identity=MikroTik wpa2-pre-shared-key=M19771050
     - name: Set interface list
       routeros_command:
