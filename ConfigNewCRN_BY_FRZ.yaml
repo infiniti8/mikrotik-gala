@@ -165,13 +165,13 @@
         commands:
           - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
           - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
-        when: shopname == "CRN"
+      when: shopname == "CRN"
     - name: Set BGP peer for FRZ
       routeros_command:
         commands:
           - /routing bgp peer add name=MPR_EK remote-address=10.193.244.1 remote-as=65000 hold-time=30s out-filter=bgp-out
           - /routing bgp peer add name=MPR_MS remote-address=10.192.244.1 remote-as=65000 hold-time=30s out-filter=bgp-out
-        when: shopname == "FRZ"
+      when: shopname == "FRZ"
     - name: Set shop name
       routeros_command:
         commands:
