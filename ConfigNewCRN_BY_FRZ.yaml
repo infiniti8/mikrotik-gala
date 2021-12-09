@@ -15,6 +15,7 @@
         commands:
           - /interface bridge add name=bridge
           - /interface bridge port add bridge=bridge interface=wlan1
+          - /interface bridge port add bridge=bridge interface=wlan2
           - /interface bridge port add bridge=bridge interface=ether3
           - /interface bridge port add bridge=bridge interface=ether4
           - /interface bridge port add bridge=bridge interface=ether5
