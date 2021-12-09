@@ -64,7 +64,7 @@
         commands:
           - /ip firewall service-port set sip disabled=yes
     - name: Enable Proxy
-      routeros_command:
+      routeros_command:N
         commands:
           - /ip proxy set anonymous=yes cache-path=web-proxy1 enabled=yes parent-proxy=0.0.0.0 port=3128
     - name: Set SNMP community and logging
@@ -72,8 +72,6 @@
         commands:
           - /snmp set enabled=yes location=("{{shopname}}"."_"."{{shopcode}}")
           - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
-          - /system logging action set 1 disk-file-name=flash/log
-          - /system logging action set 3 remote=10.193.63.7 src-address=("{{shopnet}}".".254)
     - name: Set over settings
       routeros_command:
         commands:
