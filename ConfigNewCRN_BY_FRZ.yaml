@@ -49,7 +49,7 @@
       routeros_command:
         commands:
           - /interface list member add interface=lte1 list=WAN
-        when: shopname == "CRN"
+      when: shopname == "CRN"
     - name: Set service
       routeros_command:
         commands:
