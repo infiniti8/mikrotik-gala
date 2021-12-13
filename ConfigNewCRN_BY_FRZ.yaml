@@ -106,7 +106,7 @@
         commands:
           - /ip firewall nat add action=masquerade chain=srcnat out-interface-list=WAN
           - /ip firewall nat add action=dst-nat chain=dstnat dst-port=554 in-interface-list=WAN protocol=tcp to-addresses=("{{shopnet}}".".252") to-ports=554 comment="CCTV"
-          - /ip firewall nat add action=dst-nat chain=dstnat dst-port=555 in-interface-list=WAN protocol=tcp to-addresses=("{{shopnet}}".".253") to-ports=555 comment="CCTV"
+          - /ip firewall nat add action=dst-nat chain=dstnat dst-port=555 in-interface-list=WAN protocol=tcp to-addresses=("{{shopnet}}".".253") to-ports=554 comment="CCTV"
     - name: Set firewall address-list
       routeros_command:
         commands:
