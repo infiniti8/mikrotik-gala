@@ -105,8 +105,12 @@
       routeros_command:
         commands:
           - /ip firewall nat add action=masquerade chain=srcnat out-interface-list=WAN
+    - name: Set NAT forwarding for CCTV on CRN
+      routeros_command:
+        commands:
           - /ip firewall nat add action=dst-nat chain=dstnat dst-port=554 in-interface-list=WAN protocol=tcp to-addresses=("{{shopnet}}".".252") to-ports=554 comment="CCTV"
           - /ip firewall nat add action=dst-nat chain=dstnat dst-port=555 in-interface-list=WAN protocol=tcp to-addresses=("{{shopnet}}".".253") to-ports=554 comment="CCTV"
+      when: shopname == "CRN"
     - name: Set firewall address-list
       routeros_command:
         commands:
@@ -130,10 +134,14 @@
           - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
           - /ip firewall address-list add address=192.168.0.0/16 list=Proxy
-    - name: Set firewall filter input
+    - name: Set accept DSTNAT for CCTV on CRN
       routeros_command:
         commands:
           - /ip firewall filter add action=accept chain=forward connection-nat-state=dstnat in-interface-list=WAN protocol=tcp comment="CCTV"
+      when: shopname == "CRN"
+    - name: Set firewall filter input
+      routeros_command:
+        commands:
           - /ip firewall filter add chain=input action=accept connection-state=established,related,untracked comment="Accept established,related,untracked"
           - /ip firewall filter add chain=input action=drop connection-state=invalid comment="Drop invalid"
           - /ip firewall filter add chain=input action=accept protocol=icmp comment="Accept ICMP"
