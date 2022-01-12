@@ -116,20 +116,16 @@
         commands:
           - /ip firewall address-list add address=192.168.48.27 list=Admin comment="Suhanov Onegin"
           - /ip firewall address-list add address=192.168.48.2 list=Admin comment="Nikita Onegin"
-          - /ip firewall address-list add address=10.24.11.40 list=Admin comment="Melkov MSK"
           - /ip firewall address-list add address=192.168.48.0/22 list=Admin comment="Onegin All"
-          - /ip firewall address-list add address=192.168.12.79 list=Admin comment="Server Ansible"
+          - /ip firewall address-list add address=10.193.48.227 list=Admin comment="ekb-sprt01"
           - /ip firewall address-list add address=10.193.63.7 list=Admin comment="Server Ansible"
-          - /ip firewall address-list add address=192.168.255.0/24 list=Admin comment="netadmin"
           - /ip firewall address-list add address=194.190.106.86 list=Admin comment="external LvaTolstogo"
           - /ip firewall address-list add address=195.151.193.165 list=Admin comment="external Onegin"
-          - /ip firewall address-list add address=79.172.1.40 list=Admin comment="external Onegin Convex"
           - /ip firewall address-list add address=195.162.6.0/23 list=Admin comment="AS207496 MSK"
           - /ip firewall address-list add address=195.177.194.0/23 list=Admin comment="AS207496 EKB"
           - /ip firewall address-list add address=192.168.12.52 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
           - /ip firewall address-list add address=10.193.63.21 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
           - /ip firewall address-list add address=192.168.12.53 list=SNMP_Monitor comment="Zabbix Telecom Gagarin"
-          - /ip firewall address-list add address=10.192.63.3 list=SNMP_Monitor comment="Zabbix Telecom Dataspace"
           - /ip firewall address-list add address=("{{shopnet}}".".1") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
