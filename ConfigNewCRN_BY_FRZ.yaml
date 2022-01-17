@@ -133,7 +133,7 @@
     - name: Set accept DSTNAT for CCTV on CRN
       routeros_command:
         commands:
-          - /ip firewall filter add action=accept chain=forward connection-nat-state=dstnat in-interface-list=WAN protocol=tcp comment="CCTV"
+          - /ip firewall filter add action=accept chain=forward connection-nat-state=dstnat dst-port=554,555 in-interface-list=WAN protocol=tcp comment="CCTV"
       when: shopname == "CRN"
     - name: Set firewall filter input
       routeros_command:
