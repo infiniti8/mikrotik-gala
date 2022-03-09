@@ -1,0 +1,12 @@
+- name: Block Windows update on FRN
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: test var
+      debug:
+        msg: "{{ ansible_ssh_host }}"
