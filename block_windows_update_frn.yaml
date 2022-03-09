@@ -7,6 +7,29 @@
     ansible_command_timeout: 180
 
   tasks:
-    - name: test var
-      debug:
-        msg: "{{ ansible_ssh_host }}"
+    - name: Add firewall layer7-protocol
+      routeros_command:
+        commands:
+          - /ip firewall layer7-protocol add name=windowsupdate.microsoft.com regexp=windowsupdate.microsoft.com
+          - /ip firewall layer7-protocol add name=download.windowsupdate.com regexp=download.windowsupdate.com
+          - /ip firewall layer7-protocol add name=download.microsoft.com regexp=download.microsoft.com
+          - /ip firewall layer7-protocol add name=wustat.windows.com regexp=wustat.windows.com
+          - /ip firewall layer7-protocol add name=ntservicepack.microsoft.com regexp=ntservicepack.microsoft.com
+
+    - name: Add firewall mangle
+      routeros_command:
+        commands:
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=windowsupdate.microsoft.com new-connection-mark=windowsupdate.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=download.windowsupdate.com new-connection-mark=download.windowsupdate.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=download.microsoft.com new-connection-mark=download.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=ntservicepack.microsoft.com new-connection-mark=ntservicepack.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=wustat.windows.com new-connection-mark=wustat.windows.com-fwd passthrough=yes protocol=udp
+
+    - name: Add firewall NAT for mangle
+      routeros_command:
+        commands:
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=windowsupdate.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.windowsupdate.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=wustat.windows.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=ntservicepack.microsoft.com-fwd to-addresses=10.193.48.48
