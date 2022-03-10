@@ -1,5 +1,5 @@
 - name: Block Windows update on FRN
-  hosts: newshop
+  hosts: GALA_MikroTik_FRN
   gather_facts: false
   connection: network_cli
 
