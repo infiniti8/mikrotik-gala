@@ -10,26 +10,35 @@
     - name: Add firewall layer7-protocol
       routeros_command:
         commands:
-          - /ip firewall layer7-protocol add name=windowsupdate.microsoft.com regexp=windowsupdate.microsoft.com
-          - /ip firewall layer7-protocol add name=download.windowsupdate.com regexp=download.windowsupdate.com
-          - /ip firewall layer7-protocol add name=download.microsoft.com regexp=download.microsoft.com
-          - /ip firewall layer7-protocol add name=wustat.windows.com regexp=wustat.windows.com
-          - /ip firewall layer7-protocol add name=ntservicepack.microsoft.com regexp=ntservicepack.microsoft.com
+          - /ip firewall layer7-protocol add name=update.microsoft.com regexp=update.microsoft.com
+          - /ip firewall layer7-protocol add name=go.microsoft.com regexp=go.microsoft.com
+          - /ip firewall layer7-protocol add name=login.live.com regexp=login.live.com
+          - /ip firewall layer7-protocol add name=activation-v2.sls.microsoft.com regexp=activation-v2.sls.microsoft.com
+          - /ip firewall layer7-protocol add name=validation-v2.sls.microsoft.com regexp=validation-v2.sls.microsoft.com
+          - /ip firewall layer7-protocol add name=displaycatalog.mp.microsoft.com regexp=displaycatalog.mp.microsoft.com
+          - /ip firewall layer7-protocol add name=licensing.mp.microsoft.com regexp=licensing.mp.microsoft.com
+          - /ip firewall layer7-protocol add name=purchase.mp.microsoft.com regexp=purchase.mp.microsoft.com
 
     - name: Add firewall mangle
       routeros_command:
         commands:
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=windowsupdate.microsoft.com new-connection-mark=windowsupdate.microsoft.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=download.windowsupdate.com new-connection-mark=download.windowsupdate.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=download.microsoft.com new-connection-mark=download.microsoft.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=ntservicepack.microsoft.com new-connection-mark=ntservicepack.microsoft.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=wustat.windows.com new-connection-mark=wustat.windows.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=update.microsoft.com new-connection-mark=update.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=go.microsoft.com new-connection-mark=go.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=login.live.com new-connection-mark=login.live.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=activation-v2.sls.microsoft.com new-connection-mark=activation-v2.sls.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=validation-v2.sls.microsoft.com new-connection-mark=validation-v2.sls.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=displaycatalog.mp.microsoft.com new-connection-mark=displaycatalog.mp.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=licensing.mp.microsoft.com new-connection-mark=licensing.mp.microsoft.com-fwd passthrough=yes protocol=udp
+          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{ ansible_ssh_host }}") dst-port=53 layer7-protocol=purchase.mp.microsoft.com new-connection-mark=purchase.mp.microsoft.com-fwd passthrough=yes protocol=udp
 
     - name: Add firewall NAT for mangle
       routeros_command:
         commands:
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=windowsupdate.microsoft.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.windowsupdate.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.microsoft.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=wustat.windows.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=ntservicepack.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=update.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=go.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=login.live.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=activation-v2.sls.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=validation-v2.sls.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=displaycatalog.mp.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=licensing.mp.microsoft.com-fwd to-addresses=10.193.48.48
+          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=purchase.mp.microsoft.com-fwd to-addresses=10.193.48.48
