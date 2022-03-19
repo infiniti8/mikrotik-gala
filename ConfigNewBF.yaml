@@ -10,6 +10,11 @@
     vpnpass:
     shopfullname:
   tasks:
+    - name: Rename ether1-2
+      routeros_command:
+        commands:
+          - /interface ethernet set [ find default-name=ether1 ] name=ether1-ISP
+          - /interface ethernet set [ find default-name=ether2 ] name=ether2-ISP
     - name: Add Bridge
       routeros_command:
         commands:
@@ -71,7 +76,7 @@
           - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
     - name: Set over settings
       routeros_command:
-        commands:      
+        commands:
           - /ip cloud set update-time=no
           - /system clock set time-zone-autodetect=no
           - /system clock manual set time-zone=+05:00
@@ -97,7 +102,7 @@
           - /ip dhcp-server option add code=43 name=option43 value=0x01040ac13f03
     - name: Set DHCP
       routeros_command:
-        commands:          
+        commands:
           - /ip dhcp-server option sets add name=set43 options=option43
           - /ip pool add name=pool-10 ranges=("{{shopnet}}".".51-"."{{shopnet}}".".59")
           - /ip pool add name=pool-40 ranges=("{{shopnet}}".".70-"."{{shopnet}}".".125")
@@ -107,7 +112,7 @@
           - /ip dhcp-server add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=yes
           - /ip dhcp-server add address-pool=pool-30 interface=VLAN30 lease-time=1h name=dhcp-server-30 disabled=no
           - /ip dhcp-server add address-pool=pool-40 interface=VLAN40 lease-time=24h name=dhcp-server-40 disabled=no
-          - /ip dhcp-server network add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=10.193.48.48,10.192.51.41 
+          - /ip dhcp-server network add address=("{{shopnet}}".".0/26") gateway=("{{shopnet}}".".62") dns-server=10.193.48.48,10.192.51.41
           - /ip dhcp-server network add address=("{{shopnet}}".".64/26") gateway=("{{shopnet}}".".126") dns-server=10.193.48.48,10.192.51.41  dhcp-option=option43 dhcp-option-set=set43
           - /ip dhcp-server network add address=("{{shopnet}}".".128/26") gateway=("{{shopnet}}".".190") dns-server=77.88.8.88,77.88.8.2
           - /ip dhcp-server network add address=("{{shopnet}}".".192/26") gateway=("{{shopnet}}".".254") dns-server=10.193.48.48,10.192.51.41
@@ -140,7 +145,7 @@
           - /ip firewall address-list add address=("{{shopnet}}".".1") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
-          - /ip firewall address-list add address=192.168.0.0/16 list=Proxy 
+          - /ip firewall address-list add address=192.168.0.0/16 list=Proxy
     - name: Set firewall filter input
       routeros_command:
         commands:
