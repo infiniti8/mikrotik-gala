@@ -179,7 +179,7 @@
           - /routing filter add action=accept chain=bgp-out prefix=("{{shopnet}}".".0/24")
           - /routing filter add action=discard chain=bgp-out
           - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
-          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=180s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
     - name: Set shop name
