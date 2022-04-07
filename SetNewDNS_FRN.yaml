@@ -9,4 +9,4 @@
       routeros_command:
         commands:
           - /ip dhcp-client set [find interface~"ether"] use-peer-dns=no
-          - /ip dns set servers=10.193.48.48,10.192.51.4
+          - /ip dns set servers=10.193.48.48,10.192.51.41
