@@ -1,0 +1,59 @@
+- name: Delete all mangles for DNS on FRN
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Delete firewall layer7-protocol
+      routeros_command:
+        commands:
+          - /ip firewall layer7-protocol remove [find name=myway.local]
+          - /ip firewall layer7-protocol remove [find name=galacentre.ru]
+          - /ip firewall layer7-protocol remove [find name=galamart.ru]
+          - /ip firewall layer7-protocol remove [find name=cs22.wpc.v0cdn.net]
+          - /ip firewall layer7-protocol remove [find name=apps.skype.com]
+          - /ip firewall layer7-protocol remove [find name=download.skype.com]
+          - /ip firewall layer7-protocol remove [find name=update.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=go.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=login.live.com]
+          - /ip firewall layer7-protocol remove [find name=activation-v2.sls.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=validation-v2.sls.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=displaycatalog.mp.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=licensing.mp.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=purchase.mp.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=download.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=download.windowsupdate.com]
+          - /ip firewall layer7-protocol remove [find name=ntservicepack.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=windowsupdate.microsoft.com]
+          - /ip firewall layer7-protocol remove [find name=wustat.windows.com]
+
+    - name: Delete firewall mangle
+      routeros_command:
+        commands:
+          - /ip firewall mangle remove [find new-connection-mark=myway.local-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=galacentre.ru-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=galamart.ru-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=cs22.wpc.v0cdn.net-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=apps.skype.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=download.skype.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=update.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=go.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=login.live.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=activation-v2.sls.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=validation-v2.sls.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=displaycatalog.mp.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=licensing.mp.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=purchase.mp.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=download.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=download.windowsupdate.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=ntservicepack.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=windowsupdate.microsoft.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=wustat.windows.com-fwd]
+
+    - name: Delete firewall NAT for DNS
+      routeros_command:
+        commands:
+          - /ip firewall nat remove [find to-addresses=10.193.48.48]

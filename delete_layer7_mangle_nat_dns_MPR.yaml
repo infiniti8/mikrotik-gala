@@ -1,0 +1,32 @@
+- name: Delete all mangles for DNS on MPR
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Delete firewall layer7-protocol
+      routeros_command:
+        commands:
+          - /ip firewall layer7-protocol remove [find name=myway.local]
+          - /ip firewall layer7-protocol remove [find name=galacentre.ru]
+          - /ip firewall layer7-protocol remove [find name=galamart.ru]
+          - /ip firewall layer7-protocol remove [find name=cs22.wpc.v0cdn.net]
+          - /ip firewall layer7-protocol remove [find name=apps.skype.com]
+
+    - name: Delete firewall mangle
+      routeros_command:
+        commands:
+          - /ip firewall mangle remove [find new-connection-mark=myway.local-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=galacentre.ru-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=galamart.ru-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=cs22.wpc.v0cdn.net-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=apps.skype.com-fwd]
+          - /ip firewall mangle remove [find new-connection-mark=download.skype.com-fwd]
+
+    - name: Delete firewall NAT for DNS
+      routeros_command:
+        commands:
+          - /ip firewall nat remove [find to-addresses=10.193.48.48]
