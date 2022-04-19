@@ -50,7 +50,7 @@
           - /snmp community set [ find default=yes ] addresses=192.168.12.0/24,10.193.63.0/24,10.192.63.0/24
     - name: Set over settings
       routeros_command:
-        commands:      
+        commands:
           - /ip cloud set update-time=no
           - /system clock set time-zone-autodetect=no
           - /system clock manual set time-zone=+05:00
@@ -66,13 +66,14 @@
       routeros_command:
         commands:
           - /ip dns static add address=("{{shopnet}}".".1") name=direktor
+          - /ip dns set allow-remote-requests=yes servers=10.193.48.48,10.192.51.41
     - name: Set DHCP options
       routeros_command:
         commands:
           - /ip dhcp-server option add code=43 name=option43 value=0x01040ac13f05
     - name: Set DHCP
       routeros_command:
-        commands:          
+        commands:
           - /ip dhcp-server option sets add name=set43 options=option43
           - /ip pool add name=poolwifi  ranges=("{{shopnet}}".".200-"."{{shopnet}}".".220")
           - /ip dhcp-server add address-pool=poolwifi dhcp-option-set=set43 disabled=no interface=LAN name=dhcp1
@@ -88,18 +89,6 @@
       routeros_command:
         commands:
           - /ip firewall nat add action=masquerade chain=srcnat out-interface-list=WAN
-          - /ip firewall layer7-protocol add name=myway.local regexp=myway.local
-          - /ip firewall layer7-protocol add name=galamart.ru regexp=galamart.ru
-          - /ip firewall layer7-protocol add name=cs22.wpc.v0cdn.net regexp=cs22.wpc.v0cdn.net
-          - /ip firewall layer7-protocol add name=apps.skype.com regexp=apps.skype.com
-          - /ip firewall layer7-protocol add name=download.skype.com regexp=download.skype.com
-          - /ip firewall layer7-protocol add name=galacentre.ru regexp=galacentre.ru
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galamart.ru-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=cs22.wpc.v0cdn.net-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=apps.skype.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=download.skype.com-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=galacentre.ru-fwd to-addresses=10.193.48.48
-          - /ip firewall nat add action=dst-nat chain=dstnat connection-mark=myway.local-fwd to-addresses=10.193.48.48
 
     - name: Set firewall address-list
       routeros_command:
@@ -128,15 +117,7 @@
           - /ip firewall filter add action=accept chain=forward comment=Accept_VPN_IN in-interface-list=VPN
           - /ip firewall filter add action=accept chain=forward comment="Internet acces" out-interface-list=WAN src-address-list=LAN
           - /ip firewall filter add action=drop chain=forward comment="Drop all" connection-nat-state=!dstnat disabled=yes
-    - name: Set firewall mangle
-      routeros_command:
-        commands: 
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=myway.local log=yes new-connection-mark=myway.local-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=galacentre.ru new-connection-mark=galacentre.ru-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=apps.skype.com new-connection-mark=apps.skype.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=download.skype.com new-connection-mark=download.skype.com-fwd passthrough=yes protocol=udp
-          - /ip firewall mangle add action=mark-connection chain=prerouting dst-address=("{{shopnet}}".".254") dst-port=53 layer7-protocol=galamart.ru new-connection-mark=galamart.ru-fwd passthrough=yes protocol=udp
+
     - name: Set OSPF
       routeros_command:
         commands:
