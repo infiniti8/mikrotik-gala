@@ -15,6 +15,7 @@
           - /ip firewall layer7-protocol remove [find name=galamart.ru]
           - /ip firewall layer7-protocol remove [find name=cs22.wpc.v0cdn.net]
           - /ip firewall layer7-protocol remove [find name=apps.skype.com]
+          - /ip firewall layer7-protocol remove [find name=download.skype.com]
 
     - name: Delete firewall mangle
       routeros_command:
