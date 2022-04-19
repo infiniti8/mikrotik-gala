@@ -57,3 +57,4 @@
       routeros_command:
         commands:
           - /ip firewall nat remove [find to-addresses=10.193.48.48]
+          - /ip firewall nat remove [find to-addresses=10.192.51.41]
