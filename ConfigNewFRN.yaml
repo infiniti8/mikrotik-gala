@@ -11,6 +11,7 @@
     - name: Set interface name
       routeros_command:
         commands:
+          - /interface ethernet set [ find default-name=ether1 ] name=ether1-ISP1
           - /interface ethernet set [ find default-name=ether2 ] name=ether2-LAN
           - /interface ethernet set [ find default-name=ether3 ] name=ether3-LAN
           - /interface ethernet set [ find default-name=ether4 ] name=ether4-LAN
