@@ -9,5 +9,6 @@
 
   tasks:
     - name: Note!
-      msg:
+      debug:
+        msg:
           - "{{ octet_search_100 }}"
