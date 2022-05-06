@@ -11,4 +11,4 @@
     - name: Note!
       debug:
       msg:
-          - {{ octet_search_100 }}
+          - "{{ octet_search_100 }}"
