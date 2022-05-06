@@ -1,5 +1,5 @@
 - name: Change IP address for MPR
-  hosts: GALA_MikroTik_MPR
+  hosts: newcisco
   gather_facts: false
   connection: network_cli
 
