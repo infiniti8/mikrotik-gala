@@ -13,8 +13,8 @@
     - name: Rename ether1-2
       routeros_command:
         commands:
-          - /interface ethernet set [ find default-name=ether1 ] name=ether1-ISP
-          - /interface ethernet set [ find default-name=ether2 ] name=ether2-ISP
+          - /interface ethernet set [ find default-name=ether1 ] name=ether1-ISP1
+          - /interface ethernet set [ find default-name=ether2 ] name=ether2-ISP2
     - name: Add Bridge
       routeros_command:
         commands:
