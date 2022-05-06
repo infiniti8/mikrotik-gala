@@ -1,0 +1,14 @@
+- name: Change IP address for MPR
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+    octet_search_100: "{{ ansible_ssh_host | regex_search('[0-9]+(?=\\.[0-9]+$)') }}"
+
+  tasks:
+    - name: Note!
+      debug:
+      msg:
+          - {{ octet_search_100 }}
