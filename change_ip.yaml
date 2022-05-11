@@ -16,15 +16,12 @@
     - name: Set IP adresses
       routeros_command:
         commands:
+          # for VLAN
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=VLAN10
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=VLAN40
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=VLAN30
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".254/26") interface=VLAN20
-          #its work
-
-    - name: Set IP adresses
-      routeros_command:
-        commands:
+          # for vlan
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=vlan10
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=vlan40
           #- /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=vlan30
@@ -38,11 +35,20 @@
           - /ip pool add name=pool-40 ranges=("10.242."."{{ octet_3rd }}".".70-"."10.242."."{{ octet_3rd }}".".125")
           - /ip pool add name=pool-30 ranges=("10.242."."{{ octet_3rd }}".".129-"."10.242."."{{ octet_3rd }}".".189")
           - /ip pool add name=pool-20 ranges=("10.242."."{{ octet_3rd }}".".193-"."10.242."."{{ octet_3rd }}".".253")
+          # for VLAN
           - /ip dhcp-server add address-pool=pool-10 interface=VLAN10 lease-time=1h name=dhcp-server-10 disabled=no
           - /ip dhcp-server add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=no
           - /ip dhcp-server add address-pool=pool-30 interface=VLAN30 lease-time=1h name=dhcp-server-30 disabled=no
           - /ip dhcp-server add address-pool=pool-40 interface=VLAN40 lease-time=24h name=dhcp-server-40 disabled=no
+          # for vlan
+          - /ip dhcp-server add address-pool=pool-10 interface=vlan10 lease-time=1h name=dhcp-server-10 disabled=no
+          - /ip dhcp-server add address-pool=pool-20 interface=vlan20 lease-time=24h name=dhcp-server-20 disabled=no
+          - /ip dhcp-server add address-pool=pool-30 interface=vlan30 lease-time=1h name=dhcp-server-30 disabled=no
+          - /ip dhcp-server add address-pool=pool-40 interface=vlan40 lease-time=24h name=dhcp-server-40 disabled=no
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".0/26") gateway=("10.242."."{{ octet_3rd }}".".62") dns-server=10.193.48.48,10.192.51.41
-          - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".64/26") gateway=("10.242."."{{ octet_3rd }}".".126") dns-server=10.193.48.48,10.192.51.41  dhcp-option=option43 dhcp-option-set=set43
+          # for option-set set43
+          - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".64/26") gateway=("10.242."."{{ octet_3rd }}".".126") dns-server=10.193.48.48,10.192.51.41 dhcp-option=option43 dhcp-option-set=set43
+          # for option-set set1
+          - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".64/26") gateway=("10.242."."{{ octet_3rd }}".".126") dns-server=10.193.48.48,10.192.51.41 dhcp-option=option43 dhcp-option-set=set1
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".128/26") gateway=("10.242."."{{ octet_3rd }}".".190") dns-server=77.88.8.88,77.88.8.2
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".192/26") gateway=("10.242."."{{ octet_3rd }}".".254") dns-server=10.193.48.48,10.192.51.41
