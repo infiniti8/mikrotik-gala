@@ -17,15 +17,15 @@
       routeros_command:
         commands:
           # for VLAN
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=VLAN10
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=VLAN40
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=VLAN30
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".254/26") interface=VLAN20
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=VLAN10
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=VLAN40
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=VLAN30
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".254/26") interface=VLAN20
           # for vlan
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=vlan10
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=vlan40
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=vlan30
-          #- /ip address add address=("10.242."."{{ octet_3rd }}".".254/26") interface=vlan20
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".62/26") interface=vlan10
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".126/26") interface=vlan40
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".190/26") interface=vlan30
+          - /ip address add address=("10.242."."{{ octet_3rd }}".".254/26") interface=vlan20
           #its work
 
     - name: Set DHCP
@@ -35,6 +35,7 @@
           - /ip pool add name=pool-40 ranges=("10.242."."{{ octet_3rd }}".".70-"."10.242."."{{ octet_3rd }}".".125")
           - /ip pool add name=pool-30 ranges=("10.242."."{{ octet_3rd }}".".129-"."10.242."."{{ octet_3rd }}".".189")
           - /ip pool add name=pool-20 ranges=("10.242."."{{ octet_3rd }}".".193-"."10.242."."{{ octet_3rd }}".".253")
+          - /ip dhcp-server remove [find interface=vlan]
           # for VLAN
           - /ip dhcp-server add address-pool=pool-10 interface=VLAN10 lease-time=1h name=dhcp-server-10 disabled=no
           - /ip dhcp-server add address-pool=pool-20 interface=VLAN20 lease-time=24h name=dhcp-server-20 disabled=no
@@ -52,3 +53,24 @@
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".64/26") gateway=("10.242."."{{ octet_3rd }}".".126") dns-server=10.193.48.48,10.192.51.41 dhcp-option=option43 dhcp-option-set=set1
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".128/26") gateway=("10.242."."{{ octet_3rd }}".".190") dns-server=77.88.8.88,77.88.8.2
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".192/26") gateway=("10.242."."{{ octet_3rd }}".".254") dns-server=10.193.48.48,10.192.51.41
+
+    - name: Create address-list for director
+      routeros_command:
+        commands:
+          - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".1") list=Direktor
+
+    - name: Set BGP
+      routeros_command:
+        commands:
+          - /routing bgp instance set default as=65000 router-id=("10.242."."{{ octet_3rd }}".".254")
+          - /routing filter add action=accept chain=bgp-out prefix=("10.242."."{{ octet_3rd }}".".0/24")
+          - /routing filter add action=discard chain=bgp-out
+          - /routing bgp peer add name=MPR_EK remote-address=10.193.240.1 remote-as=65000 hold-time=30s out-filter=bgp-out
+          - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=180s out-filter=bgp-out
+          - /routing bgp network add network=("10.242."."{{ octet_3rd }}".".0/24")
+          - /routing bgp aggregate add include-igp=yes instance=default prefix=("10.242."."{{ octet_3rd }}".".0/24")
+
+    - name: Set NAT
+      routeros_command:
+        commands:
+          - /ip firewall nat unset [find action=masquerade] src-address
