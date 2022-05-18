@@ -12,9 +12,9 @@
       routeros_command:
         commands:
           - /routing bgp peer add in-filter=vpn-bgp-in keepalive-time=30s name=("MPR_"."{{mpr_code}}") out-filter=vpn-bgp-out remote-address=("10.192.242."."{{mpr_code}}") remote-as=65000 route-reflect=yes ttl=default
-        when: ansible_ssh_host == "10.192.7.9"
+      when: ansible_ssh_host == "10.192.7.9"
     - name: Create BGP peers on EKB
       routeros_command:
         commands:
           - /routing bgp peer add hold-time=30s in-filter=vpn-bgp-in name=("MPR_"."{{mpr_code}}") out-filter=vpn-bgp-out remote-address=("10.193.242."."{{mpr_code}}") remote-as=65000 route-reflect=yes ttl=default
-        when: ansible_ssh_host == "10.193.7.9"
+      when: ansible_ssh_host == "10.193.7.9"
