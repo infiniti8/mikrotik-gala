@@ -11,4 +11,4 @@
     - name: Create BGP peers
       routeros_command:
         commands:
-          - /routing bgp peer add in-filter=vpn-bgp-in keepalive-time=30s name=("MPR_"."{{mpr_code}}") out-filter=vpn-bgp-out remote-address=("10.192.242."."{{mpr_code}}) remote-as=65000 route-reflect=yes ttl=default
+          - /routing bgp peer add in-filter=vpn-bgp-in keepalive-time=30s name=("MPR_"."{{mpr_code}}") out-filter=vpn-bgp-out remote-address=("10.192.242."."{{mpr_code}}") remote-as=65000 route-reflect=yes ttl=default
