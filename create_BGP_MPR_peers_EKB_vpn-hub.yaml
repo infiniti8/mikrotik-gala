@@ -1,4 +1,4 @@
-- name: Create BGP peers on MSK VPN-hub
+- name: Create BGP peers on EKB VPN-hub
   hosts: newshop
   gather_facts: false
   connection: network_cli
