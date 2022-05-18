@@ -51,10 +51,12 @@
           - /ip dhcp-server network add address=("10.242."."{{ octet_3rd }}".".192/26") gateway=("10.242."."{{ octet_3rd }}".".254") dns-server=10.193.48.48,10.192.51.41
           # its work
 
-    - name: Create address-list for director
+    - name: Create address-list for director and AP
       routeros_command:
         commands:
           - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".1") list=Direktor
+          - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".65") list=AP
+          - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".66") list=AP
           # its work
 
     - name: Set BGP
