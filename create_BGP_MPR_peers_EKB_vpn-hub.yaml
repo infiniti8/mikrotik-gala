@@ -5,6 +5,7 @@
 
   vars:
     ansible_command_timeout: 180
+    mpr_code:
 
   tasks:
     - name: Create BGP peers
