@@ -1,5 +1,5 @@
 - name: Create BGP peers on EKB VPN-hub
-  hosts: MT CHR Малышева
+  hosts: 10.193.7.9
   gather_facts: false
   connection: network_cli
 
