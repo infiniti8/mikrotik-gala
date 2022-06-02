@@ -57,6 +57,8 @@
           - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".1") list=Direktor
           - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".65") list=AP
           - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".66") list=AP
+          - /ip firewall address-list add address=("10.242."."{{ octet_3rd }}".".0/24") list=Lan
+
           # its work
 
     - name: Set BGP

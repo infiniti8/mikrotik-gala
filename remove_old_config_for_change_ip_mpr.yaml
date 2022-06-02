@@ -1,0 +1,70 @@
+- name: Remove IP address for MPR
+  hosts: newshop
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+    octet_3rd: "{{ ansible_ssh_host | regex_search('[0-9]+(?=\\.[0-9]+$)') }}"
+
+  tasks:
+
+    - name: Delete old IP adresses
+      routeros_command:
+        commands:
+          # for VLAN
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".62/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".126/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".190/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".254/26")]
+          # for vlan
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".62/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".126/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".190/26")]
+          - /ip address remove [find address=("192.167."."{{ octet_3rd }}".".254/26")]
+
+    - name: Delete old DHCP config
+      routeros_command:
+        commands:
+          - /ip pool remove [find ranges=("192.167."."{{ octet_3rd }}".".51-"."192.167."."{{ octet_3rd }}".".59")]
+          - /ip pool remove [find ranges=("192.167."."{{ octet_3rd }}".".70-"."192.167."."{{ octet_3rd }}".".125")]
+          - /ip pool remove [find ranges=("192.167."."{{ octet_3rd }}".".129-"."192.167."."{{ octet_3rd }}".".189")]
+          - /ip pool remove [find ranges=("192.167."."{{ octet_3rd }}".".193-"."192.167."."{{ octet_3rd }}".".253")]
+          # for VLAN
+          - /ip dhcp-server network remove [find address=("192.167."."{{ octet_3rd }}".".0/26")]
+          - /ip dhcp-server network remove [find address=("192.167."."{{ octet_3rd }}".".64/26")]
+          - /ip dhcp-server network remove [find address=("192.167."."{{ octet_3rd }}".".128/26")]
+          - /ip dhcp-server network remove [find address=("192.167."."{{ octet_3rd }}".".192/26")]
+
+    - name: Delete address-list Direktor
+      routeros_command:
+        commands:
+          - /ip firewall address-list remove [find list="Direktor" address=("192.167."."{{ octet_3rd }}".".1")]
+          - /ip firewall address-list remove [find list="direktor" address=("192.167."."{{ octet_3rd }}".".1")]
+          - /ip firewall address-list remove [find list="Lan" address=("192.167."."{{ octet_3rd }}".".0/24")]
+          - /ip firewall address-list remove [find list="LAN" address=("192.167."."{{ octet_3rd }}".".0/24")]
+          - /ip firewall address-list remove [find list="lan" address=("192.167."."{{ octet_3rd }}".".0/24")]
+          - /ip firewall address-list remove [find list="AP" address=("192.167."."{{ octet_3rd }}".".65")]
+          - /ip firewall address-list remove [find list="AP" address=("192.167."."{{ octet_3rd }}".".66")]
+
+    - name: Delete OSPF configuration
+      routeros_command:
+        commands:
+          - /routing ospf interface remove [find interface="MPR_CO"]
+          - /routing ospf interface remove [find interface="MPR_DC"]
+          - /routing ospf interface remove [find interface="MPR_EK"]
+          - /routing ospf interface remove [find interface="MPR_MS"]
+          - /routing ospf interface remove [find interface="vlan10"]
+          - /routing ospf interface remove [find interface="vlan20"]
+          - /routing ospf interface remove [find interface="vlan30"]
+          - /routing ospf interface remove [find interface="vlan40"]
+          - /routing ospf interface remove [find interface="VLAN10"]
+          - /routing ospf interface remove [find interface="VLAN20"]
+          - /routing ospf interface remove [find interface="VLAN30"]
+          - /routing ospf interface remove [find interface="VLAN40"]
+          - /routing ospf instance remove [find router-id=("192.167."."{{ octet_3rd }}".".254")]
+          - /routing ospf network remove [find network="10.166.251.0/24"]
+          - /routing ospf network remove [find network="10.166.254.0/24"]
+          - /routing ospf network remove [find network="10.192.240.0/22"]
+          - /routing ospf network remove [find network="10.193.240.0/22"]
+          - /routing ospf network remove [find network="("192.167."."{{ octet_3rd }}".".0/24")"]
