@@ -67,4 +67,4 @@
           - /routing ospf network remove [find network="10.166.254.0/24"]
           - /routing ospf network remove [find network="10.192.240.0/22"]
           - /routing ospf network remove [find network="10.193.240.0/22"]
-          - /routing ospf network remove [find network="("192.167."."{{ octet_3rd }}".".0/24")"]
+          - /routing ospf network remove [find network=("192.167."."{{ octet_3rd }}".".0/24")]
