@@ -62,6 +62,7 @@
           - /routing ospf interface remove [find interface="VLAN20"]
           - /routing ospf interface remove [find interface="VLAN30"]
           - /routing ospf interface remove [find interface="VLAN40"]
+          - /routing ospf interface remove [find interface="LAN"]
           - /routing ospf instance remove [find router-id=("192.167."."{{ octet_3rd }}".".254")]
           - /routing ospf network remove [find network="10.166.251.0/24"]
           - /routing ospf network remove [find network="10.166.254.0/24"]
