@@ -1,0 +1,15 @@
+- name: Unset Sberbank ports on FRN
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Unset Sberbank ports on FRN
+      routeros_command:
+        commands:
+          - /ip firewall filter unset [find dst-address="194.54.14.89"] dst-port
+          - /ip firewall filter unset [find dst-address="194.54.14.162"] dst-port
+          - /ip firewall filter unset [find dst-address="194.54.14.25"] dst-port
