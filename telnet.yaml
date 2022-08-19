@@ -11,3 +11,7 @@
       routeros_command:
         commands:
           - /system telnet twitter.com 443
+      register: telnet_result
+
+    - name: debug reg var
+      debug: var=telnet_result.stdout_lines
