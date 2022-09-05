@@ -69,3 +69,8 @@
           - /routing ospf network remove [find network="10.192.240.0/22"]
           - /routing ospf network remove [find network="10.193.240.0/22"]
           - /routing ospf network remove [find network=("192.167."."{{ octet_3rd }}".".0/24")]
+
+    - name: Change static DNS for direktor
+      routeros_command:
+        commands:
+          - /ip dns static set address=("10.242."."{{ octet_3rd }}".".1") [find name=direktor]
