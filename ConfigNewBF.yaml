@@ -182,6 +182,11 @@
           - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=180s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
+    - name: Config RADIUS
+      routeros_command:
+        commands:
+          - /user aaa set use-radius=yes
+          - /radius add address=10.193.63.22 secret=rjhj,jxrf89 service=login
     - name: Set shop name
       routeros_command:
         commands:
