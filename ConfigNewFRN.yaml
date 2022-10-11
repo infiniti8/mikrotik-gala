@@ -139,6 +139,11 @@
           - /system logging add action=remote topics=error,!ospf,!pptp
           - /system logging add action=remote topics=warning,!ospf,!pptp
           - /system logging add action=remote topics=critical,!ospf,!pptp
+    - name: Config RADIUS
+      routeros_command:
+        commands:
+          - /user aaa set use-radius=yes
+          - /radius add address=10.193.63.22 secret=rjhj,jxrf89 service=login
     - name: Set shop name
       routeros_command:
         commands:
