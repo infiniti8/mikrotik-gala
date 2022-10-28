@@ -1,0 +1,13 @@
+---
+
+- name: Add RADIUS for nFRN shops
+  hosts: GALA_MikroTik_nFRN
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Config RADIUS
+      routeros_command:
+        commands:
+          - /user aaa set use-radius=yes
+          - /radius add address=10.193.63.22 secret=rjhj,jxrf89 service=login
