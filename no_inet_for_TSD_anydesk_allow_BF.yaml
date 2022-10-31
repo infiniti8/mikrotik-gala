@@ -1,0 +1,26 @@
+- name: Closing Internet access for TSD and allowing AnyDesk on BF
+  hosts: newshop
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+    octet_3rd: "{{ ansible_ssh_host | regex_search('[0-9]+(?=\\.[0-9]+$)') }}"
+
+  tasks:
+    - name: Creating address list Allowed_hosts
+      routeros_command:
+        commands:
+          - /ip firewall address-list add list="Allowed_hosts" address="relays.net.anydesk.com"
+          - /ip firewall address-list add list="Allowed_hosts" address="tsd.galamart.ru"
+
+    - name: Edit address list Internet
+      routeros_command:
+        commands:
+          - /ip firewall address-list remove [find address="10.241."."{{ octet_3rd }}".".1" list="Internet"]
+          - /ip firewall address-list set [find address="10.241."."{{ octet_3rd }}".".0/24" list="Internet"] address="10.241."."{{ octet_3rd }}".".0/26"
+
+    - name: Edit firewall rule for TSD VLAN
+      routeros_command:
+        commands:
+          - /ip firewall filter set [find chain="to_Internet" in-interface="VLAN40"] dst-address-list="Allowed_hosts" comment="Accept access to Internet for TSD only to allowed hosts"
