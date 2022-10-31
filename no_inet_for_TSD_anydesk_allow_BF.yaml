@@ -17,8 +17,8 @@
     - name: Edit address list Internet
       routeros_command:
         commands:
-          - /ip firewall address-list remove [find address="10.241."."{{ octet_3rd }}".".1" list="Internet"]
-          - /ip firewall address-list set [find address="10.241."."{{ octet_3rd }}".".0/24" list="Internet"] address="10.241."."{{ octet_3rd }}".".0/26"
+          - /ip firewall address-list remove [find address=("10.241."."{{ octet_3rd }}".".1") list="Internet"]
+          - /ip firewall address-list set [find address=("10.241."."{{ octet_3rd }}".".0/24") list="Internet"] address=("10.241."."{{ octet_3rd }}".".0/26")
 
     - name: Edit firewall rule for TSD VLAN
       routeros_command:
