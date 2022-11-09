@@ -13,6 +13,7 @@
         commands:
           - /ip firewall address-list add list="Allowed_hosts" address="relays.net.anydesk.com"
           - /ip firewall address-list add list="Allowed_hosts" address="tsd.galamart.ru"
+          - /ip firewall address-list add list="Allowed_hosts" address="image.galacentre.ru"
 
     - name: Edit address list Internet
       routeros_command:
