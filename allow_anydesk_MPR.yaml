@@ -1,0 +1,10 @@
+- name: Allow AnyDesk on MPR
+  hosts: newshop
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Edit address list InternetServers
+      routeros_command:
+        commands:
+          - /ip firewall address-list add list="InternetServers" address="relays.net.anydesk.com"
