@@ -7,4 +7,4 @@
     - name: Edit address list InternetServers
       routeros_command:
         commands:
-          - :if ([:len [/ip fire address-list find list="InternetServers"]] > 0) do={:put [/ip firewall address-list add list="test" address="relays.net.anydesk.com"]}
+          - :if ([:len [/ip fire address-list find list="InternetServers"]] > 0) do={:put [/ip firewall address-list add list="InternetServers" address="relays.net.anydesk.com"]}
