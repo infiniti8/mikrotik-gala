@@ -92,6 +92,7 @@
           - /ip address add address=("{{shopnet}}".".190/26") interface=VLAN30
           - /ip address add address=("{{shopnet}}".".254/26") interface=VLAN20
           - /ip address add address=("10.90.90.93/24") interface=VLAN10
+          - /ip address add address=("192.168.88.100/24") interface=VLAN40          
     - name: Set DNS adresses
       routeros_command:
         commands:
@@ -148,6 +149,7 @@
           - /ip firewall address-list add list="Allowed_hosts" address="tsd.galamart.ru"
           - /ip firewall address-list add list="Allowed_hosts" address="image.galacentre.ru"
           - /ip firewall address-list add address=192.168.0.0/16 list=Proxy
+          - /ip firewall address-list add address=10.192.207.213 list=Proxy
     - name: Set firewall filter input
       routeros_command:
         commands:
@@ -184,6 +186,18 @@
           - /routing bgp peer add name=MPR_MS remote-address=10.192.240.1 remote-as=65000 hold-time=180s out-filter=bgp-out
           - /routing bgp network add network=("{{shopnet}}".".0/24")
           - /routing bgp aggregate add include-igp=yes instance=default prefix=("{{shopnet}}".".0/24")
+    - name: Config CAPsMAN
+      routeros_command:
+        commands:
+          - /caps-man manager set enabled=yes
+          - /caps-man channel add band=2ghz-b/g/n name=channel1
+          - /caps-man security add authentication-types=wpa2-psk name=IGM passphrase=Galamart
+          - /caps-man security add authentication-types=wpa2-psk name=MPRTSD passphrase=M19771050
+          - /caps-man datapath add bridge=bridge1 client-to-client-forwarding=yes interface-list=GUEST name=IGM vlan-id=30 vlan-mode=use-tag
+          - /caps-man datapath add bridge=bridge1 client-to-client-forwarding=yes interface-list=LAN name=MPRTSD vlan-id=40 vlan-mode=use-tag
+          - /caps-man configuration add channel=channel1 datapath=IGM installation=indoor mode=ap name=IGM rx-chains=0,1,2,3 security=IGM ssid=IGM tx-chains=0,1,2,3
+          - /caps-man configuration add channel=channel1 datapath=MPRTSD installation=indoor mode=ap name=MPRTSD rx-chains=0,1,2,3 security=MPRTSD ssid=MPRTSD tx-chains=0,1,2,3
+          - /caps-man provisioning add action=create-dynamic-enabled master-configuration=MPRTSD name-format=identity slave-configurations=IGM
     - name: Config RADIUS
       routeros_command:
         commands:
