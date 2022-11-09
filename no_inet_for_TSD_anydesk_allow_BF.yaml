@@ -1,5 +1,5 @@
 - name: Closing Internet access for TSD and allowing AnyDesk on BF
-  hosts: newshop
+  hosts: GALA_MikroTik_BF
   gather_facts: false
   connection: network_cli
 
