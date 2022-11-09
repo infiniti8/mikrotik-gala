@@ -142,9 +142,11 @@
           - /ip firewall address-list add address=192.168.12.52 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
           - /ip firewall address-list add address=10.193.63.21 list=SNMP_Monitor comment="Zabbix Servers Gagarin"
           - /ip firewall address-list add address=192.168.12.53 list=SNMP_Monitor comment="Zabbix Telecom Gagarin"
-          - /ip firewall address-list add address=("{{shopnet}}".".1") list=Internet
           - /ip firewall address-list add address=("{{shopnet}}".".128/26") list=Internet
-          - /ip firewall address-list add address=("{{shopnet}}".".0/24") list=Internet
+          - /ip firewall address-list add address=("{{shopnet}}".".0/26") list=Internet
+          - /ip firewall address-list add list="Allowed_hosts" address="relays.net.anydesk.com"
+          - /ip firewall address-list add list="Allowed_hosts" address="tsd.galamart.ru"
+          - /ip firewall address-list add list="Allowed_hosts" address="image.galacentre.ru"
           - /ip firewall address-list add address=192.168.0.0/16 list=Proxy
     - name: Set firewall filter input
       routeros_command:
@@ -170,7 +172,7 @@
           - /ip firewall filter add chain=forward action=accept in-interface-list=VPN out-interface-list=LAN comment="Accept access from VPN to LAN"
           - /ip firewall filter add action=jump chain=forward comment="Jump access to Internet" connection-state=new jump-target=to_Internet out-interface-list=WAN
           - /ip firewall filter add chain=forward action=drop comment="Drop All other Forward"
-          - /ip firewall filter add action=accept chain=to_Internet comment="Accept access to Internet for WiFi Guest" in-interface=VLAN40
+          - /ip firewall filter add action=accept chain=to_Internet comment="Accept access to Internet for TSD only to allowed hosts" in-interface=VLAN40 dst-address-list="Allowed_hosts"
           - /ip firewall filter add action=accept chain=to_Internet comment="Accept access to Internet for Internet group" src-address-list=Internet
     - name: Set BGP
       routeros_command:
