@@ -139,6 +139,15 @@
           - /system logging add action=remote topics=error,!ospf,!pptp
           - /system logging add action=remote topics=warning,!ospf,!pptp
           - /system logging add action=remote topics=critical,!ospf,!pptp
+    - name: Config CAPsMAN
+      routeros_command:
+        commands:
+          - /caps-man manager set enabled=yes
+          - /caps-man channel add band=2ghz-b/g/n name=channel1
+          - /caps-man security add authentication-types=wpa2-psk name=FRNTSD passphrase=M19771050
+          - /caps-man datapath add bridge=LAN client-to-client-forwarding=yes name=LAN
+          - /caps-man configuration add channel=channel1 datapath=LAN datapath.bridge=LAN mode=ap name=FRNTSD rx-chains=0,1,2 security=FRNTSD ssid=FRNTSD tx-chains=0,1,2
+          - /caps-man provisioning add action=create-dynamic-enabled master-configuration=FRNTSD name-format=identity
     - name: Config RADIUS
       routeros_command:
         commands:
