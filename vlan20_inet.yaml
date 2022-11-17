@@ -9,6 +9,6 @@
 
   tasks:
       - name: Edit address list Internet
-      routeros_command:
+        routeros_command:
         commands:
           - /ip firewall address-list add address=("10.241."."{{ octet_3rd }}".".192/26") list=Internet
