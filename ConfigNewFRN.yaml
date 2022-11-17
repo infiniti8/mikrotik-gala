@@ -63,6 +63,8 @@
       routeros_command:
         commands:
           - /ip address add address=("{{shopnet}}".".254/24") interface=LAN
+          - /ip address add address=("10.90.90.93/24") interface=LAN
+          - /ip address add address=("192.168.88.100/24") interface=LAN
     - name: Set DNS adresses
       routeros_command:
         commands:
@@ -84,13 +86,12 @@
         commands:
           - /interface l2tp-client add name=FRN_EK connect-to=195.177.194.8 allow=mschap2 user=("FRN_"."{{shopcode}}") password=("FRN_"."{{shopcode}}"."FRN_"."{{shopcode}}") disabled=no
           - /interface list member add interface=FRN_EK list=VPN
-          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("frn"."{{shopcode}}") password=("frn"."{{shopcode}}"."frn"."{{shopcode}}")  disabled=no
+          - /interface l2tp-client add name=FRN_MS connect-to=195.162.6.9 allow=mschap2 user=("frn"."{{shopcode}}") password=("FRN"."{{shopcode}}"."FRN"."{{shopcode}}")  disabled=no
           - /interface list member add interface=FRN_MS list=VPN
     - name: Set NAT
       routeros_command:
         commands:
           - /ip firewall nat add action=masquerade chain=srcnat out-interface-list=WAN
-
     - name: Set firewall address-list
       routeros_command:
         commands:
@@ -118,7 +119,6 @@
           - /ip firewall filter add action=accept chain=forward comment=Accept_VPN_IN in-interface-list=VPN
           - /ip firewall filter add action=accept chain=forward comment="Internet acces" out-interface-list=WAN src-address-list=LAN
           - /ip firewall filter add action=drop chain=forward comment="Drop all" connection-nat-state=!dstnat disabled=yes
-
     - name: Set OSPF
       routeros_command:
         commands:
@@ -139,6 +139,10 @@
           - /system logging add action=remote topics=error,!ospf,!pptp
           - /system logging add action=remote topics=warning,!ospf,!pptp
           - /system logging add action=remote topics=critical,!ospf,!pptp
+    - name: Enable Proxy
+      routeros_command:
+        commands:
+          - /ip proxy set anonymous=yes cache-path=web-proxy1 enabled=yes parent-proxy=0.0.0.0 port=3128
     - name: Config CAPsMAN
       routeros_command:
         commands:

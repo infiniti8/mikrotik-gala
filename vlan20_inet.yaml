@@ -11,4 +11,4 @@
       - name: Edit address list Internet
       routeros_command:
         commands:
-          - /ip firewall address-list add address=("{{shopnet}}".".192/26") list=Internet
+          - /ip firewall address-list add address=("10.241."."{{ octet_3rd }}".".192/26") list=Internet
