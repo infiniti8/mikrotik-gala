@@ -18,3 +18,7 @@
       debug:
         msg:
           - "{{ addr }}"
+
+    - copy:
+        content: "{{ addr }}"
+        dest: "/home/output.txt"
