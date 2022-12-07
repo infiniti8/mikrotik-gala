@@ -1,5 +1,5 @@
 - name: Get ISP1 addresses
-  hosts: 10.241.130.254,10.241.121.254
+  hosts: GALA_MikroTik_BF
   gather_facts: false
   connection: network_cli
 
