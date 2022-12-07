@@ -1,0 +1,13 @@
+- name: Add proxy
+  hosts: GALA_MikroTik_BF
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Edit address list Internet
+      routeros_command:
+        commands:
+          - /ip firewall address-list add address=("109.197.26.101") list=Proxy
