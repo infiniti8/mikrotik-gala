@@ -19,5 +19,5 @@
         var: addr
 
     - copy:
-    content: "{{ addr.stdout }}"
-    dest: "/home/output.txt"
+        content: "{{ addr.stdout }}"
+        dest: "/home/output.txt"
