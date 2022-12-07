@@ -14,11 +14,6 @@
           - /ip address print where interface="ether1-ISP1"
       register: addr
 
-    - name: Output
-      debug:
-        msg:
-          - "{{ addr }}"
-
-    - copy:
-        content: "{{ addr }}"
-        dest: "/home/output.txt"
+    - name: print home_dirs variable
+      ansible.builtin.debug:
+        var: addr
