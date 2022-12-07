@@ -11,7 +11,7 @@
     - name: Get address
       routeros_command:
         commands:
-          - /ip address print where interface="ether1-ISP1"
+          - /ip address print where interface~"ether1-ISP1"
       register: addr
 
     - name: print addr
