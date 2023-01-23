@@ -1,0 +1,13 @@
+- name: Allow Sberbank encass on MPR
+  hosts: newshop
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Unset Sberbank ports on MPR
+      routeros_command:
+        commands:
+          - :if ([/ip firewall filter get [find action=accept chain=forward comment="Sberbank"]]) do={/ip firewall filter add action="accept" chain="forward" dst-address="194.54.14.136" protocol="tcp" out-interface-list="WAN" place-before=[find dst-address="194.54.14.162"]}
