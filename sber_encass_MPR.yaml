@@ -1,5 +1,5 @@
 - name: Allow Sberbank encass on MPR
-  hosts: newshop
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
 
