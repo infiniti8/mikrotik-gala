@@ -12,7 +12,6 @@
       routeros_command:
         commands:
           - /ip address print where interface~"ISP1"
-          - /system identity print
       register: addr
 
     - name: print addr
