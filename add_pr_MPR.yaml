@@ -1,0 +1,19 @@
+- name: Add proxy
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Edit address list Proxy
+      routeros_command:
+        commands:
+          - /ip proxy set anonymous=yes cache-path=web-proxy1 enabled=yes parent-proxy=0.0.0.0 port=3128
+          - /ip firewall address-list remove [/ip firewall address-list find address=("109.197.26.101")]
+          - :if ([:len [/ip firewall address-list find list=Proxy]] = 0) do={/ip firewall filter add chain=input action=accept protocol=tcp dst-port="3128" in-interface-list=WAN comment="Accept access to MT Proxy for Proxy group" place-before=[find comment~"input ICMP"]}
+          - /ip firewall address-list add address=("192.168.0.0/16") list=Proxy
+          - /ip firewall address-list add address=("10.192.51.0/24") list=Proxy
+          - /ip firewall address-list add address=("10.192.207.213") list=Proxy
+          - /ip firewall address-list add address=("46.22.56.21") list=Proxy
