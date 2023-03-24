@@ -1,5 +1,5 @@
 - name: Get ISP1 addresses
-  hosts: GALA_MikroTik_FRN
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
 
@@ -11,7 +11,7 @@
     - name: Get address
       routeros_command:
         commands:
-          - /ip address print where interface~"ether1-ISP1"
+          - /ip address print where interface~"ISP1"
           - /system identity print
       register: addr
 
