@@ -1,5 +1,5 @@
 - name: Add proxy
-  hosts: GALA_MikroTik_FRN
+  hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
 
