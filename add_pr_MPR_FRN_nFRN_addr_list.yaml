@@ -1,0 +1,16 @@
+- name: Add proxy
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Edit address list Proxy
+      routeros_command:
+        commands:
+          - /ip firewall filter set src-address-list="Proxy" [find dst-port="3128"]
+          - /ip firewall filter set disabled=no [find dst-port="3128"]
+          - /ip proxy set enable=no
+          - /ip proxy set enable=yes
