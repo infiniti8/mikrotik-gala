@@ -10,8 +10,4 @@
     - name: Remove address-list Promsvyazvank from nFRN
       routeros_command:
         commands:
-          - /ip firewall address-list remove list="Promsvyazbank" address="91.233.63.46"
-          - /ip firewall address-list remove list="Promsvyazbank" address="91.233.63.50"
-          - /ip firewall address-list remove list="Promsvyazbank" address="91.233.63.105"
-          - /ip firewall address-list remove list="Promsvyazbank" address="193.200.10.119"
-          - /ip firewall address-list remove list="Promsvyazbank" address="193.200.10.120"
+          - /ip firewall address-list remove [find list="Promsvyazbank"]
