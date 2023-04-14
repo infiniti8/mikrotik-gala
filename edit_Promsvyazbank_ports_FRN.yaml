@@ -1,0 +1,15 @@
+- name: Open Promsvyazbank ports on FRN
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Open Promsvyazbank ports on FRN
+      routeros_command:
+        commands:
+          - /ip firewall address-list set [find address="91.233.63.46"] address="91.223.63.46"
+          - /ip firewall address-list set [find address="91.233.63.50"] address="91.223.63.50"
+          - /ip firewall address-list set [find address="91.233.63.105"] address="91.223.63.105"
