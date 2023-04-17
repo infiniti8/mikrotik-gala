@@ -1,0 +1,13 @@
+- name: Add tsd-galamart-ru address-list on MPR
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Add tsd-galamart-ru address-list on MPR
+      routeros_command:
+        commands:
+          - :if ([:len [/ip firewall address-list find where list="InternetServers"]] > 0) do={/ip firewall address-list add list="InternetServers" address="tsd.galamart.ru"}
