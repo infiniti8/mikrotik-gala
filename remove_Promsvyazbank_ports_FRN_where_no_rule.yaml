@@ -1,0 +1,13 @@
+- name: Remove Promsvyazbank ports on FRN
+  hosts: GALA_MikroTik_FRN
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Remove Promsvyazbank ports on FRN
+      routeros_command:
+        commands:
+          - :if ([:len [/ip firewall filter find comment="Sberbank"]] = 0) do={/ip firewall address-list remove [find list="Promsvyazbank"]}
