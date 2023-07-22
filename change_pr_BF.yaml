@@ -10,5 +10,5 @@
     - name: Edit address list Proxy
       routeros_command:
         commands:
-          - /ip firewall address-list remove [/ip firewall address-list find address=("109.197.26.101")]
-          - /ip firewall address-list add address=("46.22.56.21") list=Proxy
+          - /ip firewall address-list remove [/ip firewall address-list find address=("46.22.56.21")]
+          - /ip firewall address-list add address=("194.226.32.124") list=Proxy
