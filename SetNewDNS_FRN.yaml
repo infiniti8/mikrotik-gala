@@ -8,5 +8,4 @@
     - name: Change DNS client
       routeros_command:
         commands:
-          - /ip dhcp-client set [find interface~"ether"] use-peer-dns=no
-          - /ip dns set servers=10.193.48.48,10.192.51.41
+          - /ip dns set servers=10.193.48.48,10.192.51.41,195.177.195.30,195.162.7.30
