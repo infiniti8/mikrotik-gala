@@ -1,4 +1,4 @@
-- name: New DNS for FRNs
+- name: New DNS for MPR
   hosts: GALA_MikroTik_MPR
   gather_facts: false
   connection: network_cli
