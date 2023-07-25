@@ -8,4 +8,5 @@
     - name: Change DNS client
       routeros_command:
         commands:
-          - /ip dns set servers=10.193.48.48,10.192.51.41
+          #- /ip dns set servers=10.193.48.48,10.192.51.41
+          - /ip dns cache flush
