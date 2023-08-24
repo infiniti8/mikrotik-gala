@@ -1,5 +1,5 @@
 - name: Add WAN Onegin addr list
-  hosts: newshop
+  hosts: GALA_MikroTik_MPR, GALA_MikroTik_FRN
   gather_facts: false
   connection: network_cli
 
