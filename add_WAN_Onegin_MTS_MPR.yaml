@@ -10,5 +10,5 @@
     - name: Edit address list
       routeros_command:
         commands:
-          - :if ([:len [/ip firewall address-list find list=InetAdmin]] = 1) do={/ip firewall address-list add address=("85.235.52.188") list=InetAdmin}
-          - :if ([:len [/ip firewall address-list find list=Admin]] = 1) do={/ip firewall address-list add address=("85.235.52.188") list=Admin}
+          - :if ([:len [/ip firewall address-list find address=InetAdmin]] > 0) do={/ip firewall address-list add address=("85.235.52.188") list=InetAdmin}
+          - :if ([:len [/ip firewall address-list find list=Admin]] > 0) do={/ip firewall address-list add address=("85.235.52.188") list=Admin}
