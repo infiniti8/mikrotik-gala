@@ -121,6 +121,7 @@
           - /ip firewall address-list add address=10.193.63.7 list=Admin comment="Server Ansible"
           - /ip firewall address-list add address=194.190.106.86 list=Admin comment="external LvaTolstogo"
           - /ip firewall address-list add address=195.151.193.165 list=Admin comment="external Onegin"
+          - /ip firewall address-list add address=85.235.52.188 list=Admin comment="external Onegin"
           - /ip firewall address-list add address=195.162.6.0/23 list=Admin comment="AS207496 MSK"
           - /ip firewall address-list add address=195.177.194.0/23 list=Admin comment="AS207496 EKB"
           - /ip firewall address-list add address=192.168.12.52 list=SNMP_Monitor comment="Zabbix Servers Gagarin"

@@ -98,6 +98,7 @@
           - /ip firewall address-list add address=10.193.63.7 list=InetAdmin comment="Server Ansible"
           - /ip firewall address-list add address=194.190.106.86 list=InetAdmin comment="external LvaTolstogo"
           - /ip firewall address-list add address=195.151.193.165 list=InetAdmin comment="external Onegin"
+          - /ip firewall address-list add address=85.235.52.188 list=InetAdmin comment="external Onegin"
           - /ip firewall address-list add address=79.172.1.40 list=InetAdmin comment="external Onegin Convex"
           - /ip firewall address-list add address=195.162.6.0/23 list=InetAdmin comment="AS207496 MSK"
           - /ip firewall address-list add address=195.177.194.0/23 list=InetAdmin comment="AS207496 EKB"
