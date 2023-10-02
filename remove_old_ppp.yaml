@@ -1,0 +1,27 @@
+- name: Remove old tunnels MPR
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 180
+
+  tasks:
+    - name: Remove old tunnels
+      routeros_command:
+        commands:
+          - /routing ospf interface remove [find interface=MPR_CO]
+          - /routing ospf interface remove [find interface=MPR_DC]
+          - /routing ospf network remove [find network="10.166.251.0/24"]
+          - /routing ospf network remove [find network="10.166.254.0/24"]
+          - /interface list member remove [find interface=MPR_CO]
+          - /interface list member remove [find interface=MPR_DC]
+          - /ip firewall address-list remove [find list=VPN-CO]
+          - /ip firewall address-list remove [find list=VPN-DC]
+          - /ip firewall filter remove [find dst-address-list="VPN-CO"]
+          - /ip firewall filter remove [find dst-address-list="VPN-DC"]
+          - /interface l2tp-client remove [find name=MPR_CO]
+          - /interface l2tp-client remove [find name=MPR_DC]
+          - /ip route remove [find dst-address="195.58.22.249/32"]
+          - /ip route remove [find dst-address="195.151.219.233/32"]
+          - /ip address remove [find address="192.168.99.254/24"]
