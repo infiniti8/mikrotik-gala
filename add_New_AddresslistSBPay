@@ -1,0 +1,20 @@
+- name: add_New_addresslistSBPay
+  hosts: GALA_MikroTik_MPR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: Change_GUEST_PAY
+      routeros_command:
+        commands:
+        - /ip firewall address-list add address=10.16.128.0/19 comment=OneginNew list=CO
+        - /ip firewall address-list add address=10.193.204.0/22 comment=KerioEKB list=CO
+        - /ip firewall address-list add address=194.54.12.0/22 comment=Sber list=SBPay
+        - /ip firewall address-list add address=185.179.144.0/22 comment=VTBbank list=SBPay
+        - /ip firewall address-list add address=185.10.208.0/22 list=SBPay
+        - /ip firewall address-list add address=178.248.239.0/24 comment=Tinkoff_Bank list=SBPay
+        - /ip firewall address-list add address=178.248.235.0/24 list=SBPay
+        - /ip firewall address-list add address=193.28.44.0/24 comment=Raifaizen list=SBPay
+        - /ip firewall address-list add address=193.148.15.0/24 comment=Alfabank list=SBPay
+        - /ip firewall address-list add address=194.84.67.0/24 list=SBPay
+        - /ip firewall address-list add address=217.12.96.0/21 list=SBPay
+        - /ip firewall address-list add address=217.12.104.0/23 list=SBPay
